@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by MOCCASIN version 1.3.0 on 2023-07-22 19:37 with libSBML version 5.17.0. -->
+<sbml xmlns="http://www.sbml.org/sbml/level2/version3/" level="2" version="3">
+  <model id="Model_generated_by_BIOCHAM">
+    <listOfCompartments>
+      <compartment id="compartmentOne" spatialDimensions="3" size="1" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="x_1" name="x_1" compartment="compartmentOne" initialConcentration="2" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="x_2" name="x_2" compartment="compartmentOne" initialConcentration="0.25" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="k1" name="k1" value="8" constant="true"/>
+      <parameter id="k2" name="k2" value="1" constant="true"/>
+      <parameter id="k3" name="k3" value="1" constant="true"/>
+      <parameter id="k4" name="k4" value="1" constant="true"/>
+    </listOfParameters>
+    <listOfReactions>
+      <reaction id="R_1" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="x_1" stoichiometry="1"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="x_2" stoichiometry="1"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k2 </ci>
+              <apply>
+                <power/>
+                <ci> x_1 </ci>
+                <cn> 2 </cn>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R_2" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="x_2" stoichiometry="1"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="x_1" stoichiometry="2"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k1 </ci>
+              <ci> x_2 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R_3" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="x_1" stoichiometry="1"/>
+          <speciesReference species="x_2" stoichiometry="1"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="x_2" stoichiometry="1"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k3 </ci>
+              <ci> x_1 </ci>
+              <ci> x_2 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R_4" reversible="false" fast="false">
+        <listOfReactants>
+          <speciesReference species="x_1" stoichiometry="1"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> k4 </ci>
+              <ci> x_1 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

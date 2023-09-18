@@ -1,0 +1,46 @@
+begin model
+
+begin parameters
+    k1 8
+    k2 1
+    k3 1
+    k4 1
+
+    A0 2
+    B0 0.25
+end parameters
+
+begin seed species
+    A A0
+    B B0
+end seed species
+
+begin observables
+    Molecules A A()
+    Molecules B B()
+end observables
+
+begin functions
+    # Positive terms of dA/dt
+    kfA() 2*k1*B()
+
+    # Negative terms of dA/dt **this was divided by A()**
+    krA() k2*A() + k3*B() + k4
+
+    # Positive terms of dB/dt
+    kfB() k2*A()^2
+
+    # Negative terms of dB/dt **this was divided by B()**
+    krB() k1
+end functions
+
+begin reaction rules
+    0 <-> A kfA(),krA()
+    0 <-> B kfB(),krB()
+end reaction rules
+
+end model
+
+generate_network({overwrite=>1})
+writeSBML()
+simulate({method=>"ode",t_end=>200,n_steps=>2000})
