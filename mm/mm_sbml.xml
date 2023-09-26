@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by BioNetGen 2.8.4  -->
 <sbml xmlns="http://www.sbml.org/sbml/level2/version3" level="2" version="3">
-  <model id="model">
+  <model id="mm">
     <listOfUnitDefinitions>
       <unitDefinition id="substance" name="substance">
         <listOfUnits>
@@ -13,26 +13,56 @@
       <compartment id="cell" size="1"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="S1" compartment="cell" initialAmount="600" name="S()"/>
-      <species id="S2" compartment="cell" initialAmount="6" name="E()"/>
-      <species id="S3" compartment="cell" initialAmount="0" name="ES()"/>
-      <species id="S4" compartment="cell" initialAmount="0" name="P()"/>
+      <species id="S1" compartment="cell" initialAmount="0.090337114" name="S()"/>
+      <species id="S2" compartment="cell" initialAmount="5.9915785" name="E()"/>
+      <species id="S3" compartment="cell" initialAmount="0.0084215144" name="ES()"/>
+      <species id="S4" compartment="cell" initialAmount="599.90124" name="P()"/>
     </listOfSpecies>
     <listOfParameters>
       <!-- Independent variables -->
       <parameter id="log_k1" value="-2.77"/>
       <parameter id="log_k2" value="-1"/>
       <parameter id="log_k3" value="-2"/>
+      <!-- Dependent variables -->
+      <parameter id="_rateLaw1" constant="true"/>
+      <parameter id="_rateLaw2" constant="true"/>
+      <parameter id="_rateLaw3" constant="true"/>
       <!-- Observables -->
       <parameter id="S" constant="false"/>
       <parameter id="E" constant="false"/>
       <parameter id="ES" constant="false"/>
       <parameter id="P" constant="false"/>
-      <!-- Global functions -->
-      <parameter id="k1" constant="false"/>
-      <parameter id="k2" constant="false"/>
-      <parameter id="k3" constant="false"/>
     </listOfParameters>
+    <listOfInitialAssignments>
+      <!-- Dependent variables -->
+      <initialAssignment symbol="_rateLaw1">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> log_k1 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw2">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> log_k2 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw3">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> log_k3 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+    </listOfInitialAssignments>
     <listOfRules>
       <!-- Observables -->
       <assignmentRule variable="S">
@@ -71,34 +101,6 @@
             </apply>
           </math>
       </assignmentRule>
-      <!-- Global functions -->
-      <assignmentRule variable="k1">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <power/>
-            <cn> 10 </cn>
-            <ci> log_k1 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="k2">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <power/>
-            <cn> 10 </cn>
-            <ci> log_k2 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
-      <assignmentRule variable="k3">
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <apply>
-            <power/>
-            <cn> 10 </cn>
-            <ci> log_k3 </ci>
-          </apply>
-        </math>
-      </assignmentRule>
     </listOfRules>
     <listOfReactions>
       <reaction id="R1" reversible="false">
@@ -113,7 +115,7 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> k1 </ci>
+              <ci> _rateLaw1 </ci>
               <ci> S1 </ci>
               <ci> S2 </ci>
             </apply>
@@ -132,7 +134,7 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> k2 </ci>
+              <ci> _rateLaw2 </ci>
               <ci> S3 </ci>
             </apply>
           </math>
@@ -150,7 +152,7 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> k3 </ci>
+              <ci> _rateLaw3 </ci>
               <ci> S3 </ci>
             </apply>
           </math>
