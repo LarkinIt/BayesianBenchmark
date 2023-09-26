@@ -22,9 +22,15 @@ begin observables
     Molecules  ES    ES()
     Molecules  P     P()
 end observables
+begin functions
+    kf()    10^(log_k1)
+    kr()    10^(log_k2)
+    kcat()  10^(log_k3)
+end functions
+
 begin reaction rules
-    E + S <-> ES  10^(log_k1), 10^(log_k2)
-    ES -> E + P   10^(log_k3)
+    E + S <-> ES  kf(),kr()
+    ES -> E + P   kcat()
 end reaction rules
 end model
 
