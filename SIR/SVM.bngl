@@ -1,0 +1,44 @@
+# Name: Standard Viral Model
+# Description: Kinetic model of host infection.
+# Author: James R. Faeder
+# Date: 02Nov2020
+begin model
+begin parameters
+  log_beta      -7.0 # desc:infection rate units: 1/indiv 1/day
+  log_delta      0.0    # desc: infected cell death rate units: 1/day
+  log_pi         2.0  # desc: viral production rate per cell units: indiv/day
+  log_gamma      log10(15)     # desc: viral clearance rate units: 1/day
+  S0         1e7    # desc: initial number uninfected cells
+  I0         1      # desc: initial number infected cells
+  V0         6.67 #10^(log_pi-log_gamma)*I0 # 6.67 # desc: intial number of virusses
+end parameters
+begin seed species
+  S   S0
+  I   I0
+  V   V0
+end seed species
+begin observables
+  Molecules S S()
+  Molecules I I()
+  Molecules V V()
+end observables
+begin functions
+  log10_V log10(V)
+  beta    10^log_beta
+  delta   10^log_delta
+  pi      10^log_pi
+  gamma   10^log_gamma
+end functions
+
+begin reaction rules
+  r1: S + V -> I + V beta
+  r2: I -> 0 delta
+  r3: I -> I + V pi
+  r4: V -> 0 gamma
+end reaction rules
+end model
+
+# Actions
+generate_network({overwrite=>1})
+writeSBML()
+#simulate({method=>"ode",t_end=>30,n_steps=>200,print_functions=>1})
