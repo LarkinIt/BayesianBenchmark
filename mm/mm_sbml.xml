@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by BioNetGen 2.9.0  -->
+<!-- Created by BioNetGen 2.8.5  -->
 <sbml xmlns="http://www.sbml.org/sbml/level2/version3" level="2" version="3">
   <model id="mm">
     <listOfUnitDefinitions>
@@ -13,10 +13,10 @@
       <compartment id="cell" size="1"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="S1" compartment="cell" initialAmount="0.090337165" name="S()"/>
-      <species id="S2" compartment="cell" initialAmount="5.9915785" name="E()"/>
-      <species id="S3" compartment="cell" initialAmount="0.0084215191" name="ES()"/>
-      <species id="S4" compartment="cell" initialAmount="599.90124" name="P()"/>
+      <species id="S1" compartment="cell" initialAmount="600" name="S()"/>
+      <species id="S2" compartment="cell" initialAmount="6" name="E()"/>
+      <species id="S3" compartment="cell" initialAmount="0" name="ES()"/>
+      <species id="S4" compartment="cell" initialAmount="0" name="P()"/>
     </listOfSpecies>
     <listOfParameters>
       <!-- Independent variables -->
@@ -33,9 +33,6 @@
       <parameter id="kr" constant="false"/>
       <parameter id="kcat" constant="false"/>
     </listOfParameters>
-    <listOfInitialAssignments>
-      <!-- All initial values -->
-    </listOfInitialAssignments>
     <listOfRules>
       <!-- Observables -->
       <assignmentRule variable="S">
