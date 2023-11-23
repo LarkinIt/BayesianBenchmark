@@ -36,5 +36,5 @@ end model
 
 # generate reaction network
 generate_network({overwrite=>1})
-simulate({method=>"ode",suffix=>"ode",t_end=>20000, n_steps=>2000, print_functions=>1})
 writeSBML()
+simulate({method=>"ode",suffix=>"ode",t_end=>20000, n_steps=>2000, print_functions=>1})

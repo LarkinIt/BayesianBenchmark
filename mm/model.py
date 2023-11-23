@@ -25,7 +25,7 @@ class Model:
             rr.reset() # forces initial conditions and BNGL functions to be re-evaluated
         
         t_span = (self.ts[0], self.ts[-1])
-        trajs = rr.simulate(t_span[0], t_span[1], int(t_span[1]*100+1))
+        trajs = rr.simulate(t_span[0], t_span[1], 21) #int(t_span[1]*100+1))
         return trajs    
         
     def call_sim(self, model_param = None, x0 = None, return_all_species=False): #takes in candidate parameters then solves the ode
