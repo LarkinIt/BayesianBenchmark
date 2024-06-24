@@ -1,1 +1,2 @@
-observableId    observableName  observableFormula
+observableId	observableName	observableFormula	noiseFormula
+product	Product	P	0
