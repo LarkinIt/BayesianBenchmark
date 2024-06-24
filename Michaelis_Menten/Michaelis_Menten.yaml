@@ -9,3 +9,5 @@ problems:
   - observables_Michaelis_Menten.tsv
   sbml_files:
   - model_Michaelis_Menten.xml
+  visualization_files:
+  - visualizationSpecification_Michaelis_Menten.tsv
