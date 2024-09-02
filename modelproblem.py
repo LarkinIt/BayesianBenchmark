@@ -23,14 +23,15 @@ class ModelProblem():
 		
 		self.problem = problem
 		self.petab_problem = petab_problem
+		self.n_dim = len(get_priors_from_df(petab_problem.parameter_df,
+								  mode="objective"))
 
 
 	def create_poco_priors(self):
 		df = self.petab_problem.parameter_df
 		prior_info = get_priors_from_df(df, mode="objective")
 		prior_list = []
-		#bounds = list(zip(df["lowerBound"].values, df["upperBound"].values))
-		
+
 		# the list returned from get_priors_from_df is always
 		# in the following order:
 		# 1) prior type (string)
@@ -47,7 +48,6 @@ class ModelProblem():
 				mean, std = prior_pars
 				prior = norm(log=mean, scale=std)
 			prior_list.append(prior)
-
 		return prior_list
 
 

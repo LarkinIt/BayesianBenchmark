@@ -13,5 +13,9 @@ class BayesianInference(ABC):
         pass 
     
     @abstractmethod
+    def process_results(self):
+        pass
+
+    @abstractmethod
     def run(self):
         pass

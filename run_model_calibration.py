@@ -1,12 +1,8 @@
 import os
-import petab
+import pickle
 import argparse
-import numpy as np
-import pocomc as pc
-import pypesto.sample as sample
 from modelproblem import ModelProblem
 from pocosampler import pocoSampler
-import pypesto.objective.roadrunner as pypesto_rr
 
 os.environ["OMP_NUM_THREADS"] = "1"
 
@@ -17,17 +13,22 @@ def run_model_calibration(args):
     problem = args.problem
     n_ensemble = args.n_ensemble
     n_cpus = args.n_cpus
+    output_dir = args.output_dir
     
     mod_prob = ModelProblem(problem)
     mod_prob.initialize()
-    print(mod_prob.log_likelihood_wrapper([0,0,0]))
     
     if method == "ptmcmc":
         pass
     else:
         sampler = pocoSampler(seed, n_ensemble, mod_prob, n_cpus, method)
     sampler.initialize()
-    sampler.run()
+    results = sampler.run()
+
+    results_fname = f"{output_dir}/{problem}_{method}_{seed}seed.pkl"
+    with open(results_fname, "wb") as f:
+        pickle.dump(results, f, protocol=pickle.HIGHEST_PROTOCOL)
+    print(f"Results saved to {results_fname}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
