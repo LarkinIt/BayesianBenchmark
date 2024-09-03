@@ -23,13 +23,13 @@ class ModelProblem():
 		
 		self.problem = problem
 		self.petab_problem = petab_problem
-		self.n_dim = len(get_priors_from_df(petab_problem.parameter_df,
-								  mode="objective"))
-
+		prior_info = get_priors_from_df(petab_problem.parameter_df,
+								  mode="objective")
+		self.prior_info = prior_info
+		self.n_dim = len(prior_info)
+		self.bounds = [x[3] for x in prior_info]
 
 	def create_poco_priors(self):
-		df = self.petab_problem.parameter_df
-		prior_info = get_priors_from_df(df, mode="objective")
 		prior_list = []
 
 		# the list returned from get_priors_from_df is always
@@ -39,7 +39,7 @@ class ModelProblem():
 		# 3) parameter scale (string - log or linear)
 		# 4) parameter bounds (tuple)
 		# ignore #3 and #4 
-		for info in prior_info:
+		for info in self.prior_info:
 			type, prior_pars, _, _ = info
 			if "uniform" in type.lower():
 				lb, ub = prior_pars
