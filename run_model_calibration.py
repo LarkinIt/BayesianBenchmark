@@ -22,7 +22,7 @@ def run_model_calibration(args):
     mod_prob.initialize()
     
     if method == "ptmcmc":
-        sampler = pestoSampler(seed, n_ensemble, mod_prob, n_cpus, 10000)
+        sampler = pestoSampler(seed, n_ensemble, mod_prob, n_cpus, method, args.n_iter)
     else:
         sampler = pocoSampler(seed, n_ensemble, mod_prob, n_cpus, method)
     sampler.initialize()

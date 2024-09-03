@@ -5,9 +5,15 @@ from bayesianinference import BayesianInference
 from modelproblem import ModelProblem
 
 class pocoSampler(BayesianInference):
-    def __init__(self, seed: int, n_ensemble: int, model_problem: ModelProblem, n_cpus: int, method):
-        super().__init__(seed, n_ensemble, model_problem, n_cpus)
-        self.method = method
+    def __init__(
+        self,
+        seed: int,
+        n_ensemble: int,
+        model_problem: ModelProblem,
+        n_cpus: int,
+        method: str
+        ):
+        super().__init__(seed, n_ensemble, model_problem, n_cpus, method)
         self.precondition = False
         if method == "pmc":
             self.precondition = True
@@ -30,7 +36,8 @@ class pocoSampler(BayesianInference):
             n_active=self.n_ensemble,
             precondition=self.precondition,
             random_state=self.seed,
-            pool=pool_no
+            pool=pool_no,
+            sample="rwm"
         )
         self.sampler = sampler
 

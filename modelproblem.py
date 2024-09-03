@@ -21,6 +21,13 @@ class ModelProblem():
 		importer = pypesto_rr.PetabImporterRR(petab_problem)
 		problem = importer.create_problem()
 		
+		# set tolerances for ode solver
+		solver_options = pypesto_rr.SolverOptions(
+			relative_tolerance = 5e-10,
+			absolute_tolerance = 1e-10
+			)
+		problem.objective.solver_options = solver_options
+
 		self.problem = problem
 		self.petab_problem = petab_problem
 		prior_info = get_priors_from_df(petab_problem.parameter_df,
