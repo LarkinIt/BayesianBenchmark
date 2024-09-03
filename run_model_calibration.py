@@ -35,14 +35,14 @@ def run_model_calibration(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--seed", type=int, default=1)
-    parser.add_argument("-m", "--method", type=str, choices={"pmc", "smc", "ptmcmc"})
-    parser.add_argument("-p", "--problem", type=str)
+    parser.add_argument("-s", "--seed", type=int, default=1, help="Seed number used for NumPy Random Number Generator.")
+    parser.add_argument("-m", "--method", type=str, choices={"pmc", "smc", "ptmcmc"}, help="Bayesian inference method to use to perform parameter estimation. Choices include ``ptmcmc`` for Parallel Tempering MCMC, ``smc`` for Sequential Monte Carlo, and ``pmc`` for Preconditioned Monte Carlo.")
+    parser.add_argument("-p", "--problem", type=str, help="Parameter estimation problem and corresponding directory (e.g. Michaelis-Menten)")
     # ! WARNING: PTMCMC IS NOT PARALLELIZABLE
-    parser.add_argument("-c", "--n_cpus", type=int, default=1)
-    parser.add_argument("-n", "--n_ensemble", type=int, default=100)
-    parser.add_argument("-i", "--n_iter", type=int)
-    parser.add_argument("-o", "--output_dir", type=str, default=".")
+    parser.add_argument("-c", "--n_cpus", type=int, default=1, help="Number of CPUs to use. Note: this is only used when method = smc or pmc")
+    parser.add_argument("-n", "--n_ensemble", type=int, default=100, help="The number of particles (for SMC and PMC) or chains (for PT-MCMC)")
+    parser.add_argument("-i", "--n_iter", type=int, help="Number of MCMC iterations. ONLY used for PT-MCMC")
+    parser.add_argument("-o", "--output_dir", type=str, default=".", help="Directory to save result file to. Defaults to the current directory.")
     args = parser.parse_args()
     
     run_model_calibration(args)
