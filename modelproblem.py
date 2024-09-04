@@ -1,10 +1,8 @@
 import petab
 from pprint import pprint
-import pocomc as pc
 import pypesto.objective
 from petab.v1.parameters import get_priors_from_df
 from scipy.stats import uniform, norm
-#from abc import ABC, abstractmethod
 import pypesto.objective.roadrunner as pypesto_rr
 
 
@@ -20,14 +18,14 @@ class ModelProblem():
 		petab_problem = petab.v1.Problem.from_yaml(petab_yaml)
 		importer = pypesto_rr.PetabImporterRR(petab_problem)
 		problem = importer.create_problem()
-		
+
 		# set tolerances for ode solver
 		solver_options = pypesto_rr.SolverOptions(
-			relative_tolerance = 5e-10,
-			absolute_tolerance = 1e-10
+			relative_tolerance = 5e-8,
+			absolute_tolerance = 1e-6
 			)
 		problem.objective.solver_options = solver_options
-
+		
 		self.problem = problem
 		self.petab_problem = petab_problem
 		prior_info = get_priors_from_df(petab_problem.parameter_df,
@@ -53,7 +51,7 @@ class ModelProblem():
 				prior = uniform(loc=lb, scale=ub-lb)
 			elif "normal" in type.lower():
 				mean, std = prior_pars
-				prior = norm(log=mean, scale=std)
+				prior = norm(loc=mean, scale=std)
 			prior_list.append(prior)
 		return prior_list
 
