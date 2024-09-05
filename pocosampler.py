@@ -64,8 +64,12 @@ class pocoSampler(BayesianInference):
         all_results["posterior_llh"] = poco_results["logl"][-1, :]
         all_results["all_samples"] = poco_results["x"]
         all_results["all_llh"] = poco_results["logl"]
-        all_results["n_fun_calls"] = poco_results["calls"]
+        all_results["n_fun_calls"] = sampler.calls
         all_results["algo_specific_info"] = algo_specific_info
+
+        #print("POCO OUTPUT: ", poco_results["calls"])
+        #print("POCO 2 OUTPUT: ", sampler.calls)
+        #print("LOG LIKELIHOOD OUTPUT: ", self.model_problem.n_fun_calls)
         return all_results
             
     def run(self):

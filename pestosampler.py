@@ -22,7 +22,6 @@ class pestoSampler(BayesianInference):
 
 	def initialize(self):
 		mod_prob = self.model_problem
-
 		lhs = qmc.LatinHypercube(d=mod_prob.n_dim, seed=self.seed)
 		scale_x0 = lhs.random(n=self.n_ensemble)
 		lbs = [x[0] for x in mod_prob.bounds]
@@ -35,6 +34,7 @@ class pestoSampler(BayesianInference):
 			)
 		sampler.initialize(mod_prob.problem, list(x0))
 
+		self.og_neglog_post = []
 		# change the history of each internal 
 		# sampler to save objective function calls
 		for internal_sampler in sampler.samplers:
@@ -48,6 +48,19 @@ class pestoSampler(BayesianInference):
 					options=hist_opts
 					)
 				)
+			self.og_neglog_post.append(internal_sampler.neglogpost)
+		
+		"""history_options = history.HistoryOptions(trace_record=True)
+		hist_opts = history.HistoryOptions.assert_instance(history_options)
+		mod_prob.problem.objective.history = mod_prob.problem.objective.create_history(
+					"ch1",
+					x_names=mod_prob.problem.objective.x_names,
+					options=hist_opts
+					)"""
+		
+
+		for internal_sampler in sampler.samplers:
+			internal_sampler.neglogpost = self.model_problem.log_likelihood_wrapper
 		
 		self.sampler = sampler
 
@@ -67,7 +80,7 @@ class pestoSampler(BayesianInference):
 
 		all_samples = np.array([x.trace_x for x in sampler.samplers])
 		all_llh = np.array([x.trace_neglogpost for x in sampler.samplers])
-		n_fun_calls = np.sum([x.neglogpost.history.__dict__["_n_fval"] for x in sampler.samplers])
+		n_fun_calls = self.model_problem.n_fun_calls
 		all_results["all_samples"] = all_samples
 		all_results["all_llh"] = all_llh
 		all_results["n_fun_calls"] = n_fun_calls
@@ -76,16 +89,6 @@ class pestoSampler(BayesianInference):
 			
 	def run(self):
 		sampler = self.sampler
-		
-		"""
-		if self.n_cpus > 1:
-			engine = eng.SingleCoreEngine()
-		else:
-			n_procs = self.n_cpus
-			if self.n_cpus == 0:
-				n_procs = os.cpu_count()
-			engine = eng.MultiProcessEngine(n_procs=n_procs)
-		"""
 		sampler.sample(n_samples=self.n_iter)
 		results = self.process_results()
 		return results
