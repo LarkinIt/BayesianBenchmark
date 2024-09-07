@@ -18,12 +18,19 @@ class ModelProblem():
 		problem = importer.create_problem()
 
 		# set tolerances for ode solver
-		solver_options = pypesto_rr.SolverOptions(
-			relative_tolerance = 1e-16,
-			absolute_tolerance = 1e-8
-			)
-		problem.objective.solver_options = solver_options
-		
+		if self.model_name == "Bachmann_MSB2011":
+			solver_options = pypesto_rr.SolverOptions(
+				integrator="rk45"
+				)
+			problem.objective._objectives[0].solver_options = solver_options
+		else:
+			solver_options = pypesto_rr.SolverOptions(
+				relative_tolerance = 1e-16,
+				absolute_tolerance = 1e-8
+				)
+		#print(problem.objective.__dict__.keys())
+			problem.objective.solver_options = solver_options
+
 		self.problem = problem
 		self.petab_problem = petab_problem
 		prior_info = get_priors_from_df(petab_problem.parameter_df,
