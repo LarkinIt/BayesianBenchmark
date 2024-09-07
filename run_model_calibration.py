@@ -22,7 +22,15 @@ def run_model_calibration(args):
     mod_prob.initialize()
     
     if method == "ptmcmc":
-        sampler = pestoSampler(seed, n_ensemble, mod_prob, n_cpus, method, args.n_iter)
+        sampler = pestoSampler(
+            seed,
+            n_ensemble,
+            mod_prob,
+            n_cpus,
+            method,
+            args.n_iter,
+            args.n_chains
+            )
     else:
         sampler = pocoSampler(seed, n_ensemble, mod_prob, n_cpus, method)
     sampler.initialize()
@@ -40,8 +48,9 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--problem", type=str, help="Parameter estimation problem and corresponding directory (e.g. Michaelis-Menten)")
     # ! WARNING: PTMCMC IS NOT PARALLELIZABLE
     parser.add_argument("-c", "--n_cpus", type=int, default=1, help="Number of CPUs to use. Note: this is only used when method = smc or pmc")
-    parser.add_argument("-n", "--n_ensemble", type=int, default=100, help="The number of particles (for SMC and PMC) or chains (for PT-MCMC)")
+    parser.add_argument("-n", "--n_ensemble", type=int, default=100, help="The number of samples used to make the final posterior ensemble. This is also used as the number of particles used in PMC and SMC")
     parser.add_argument("-i", "--n_iter", type=int, help="Number of MCMC iterations. ONLY used for PT-MCMC")
+    parser.add_argument("-w", "--n_chains", type=int, default=4, help="Number of chains used for PT-MCMC")
     parser.add_argument("-o", "--output_dir", type=str, default=".", help="Directory to save result file to. Defaults to the current directory.")
     args = parser.parse_args()
     

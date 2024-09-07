@@ -3,9 +3,8 @@ import numpy as np
 from scipy.stats import qmc
 from bayesianinference import BayesianInference
 from modelproblem import ModelProblem
-import pypesto.engine as eng
 import pypesto.sample as sample
-import pypesto.history as history
+from pypesto.sample.geweke_test import burn_in_by_sequential_geweke
 
 class pestoSampler(BayesianInference):
 	def __init__(
@@ -15,72 +14,77 @@ class pestoSampler(BayesianInference):
 			model_problem: ModelProblem,
 			n_cpus: int,
 			method: str,
-			n_iter: int
+			n_iter: int,
+			n_chains: int
 			):
 		super().__init__(seed, n_ensemble, model_problem, n_cpus, method)
 		self.n_iter = n_iter
+		self.n_chains = n_chains
 
 	def initialize(self):
 		mod_prob = self.model_problem
 		lhs = qmc.LatinHypercube(d=mod_prob.n_dim, seed=self.seed)
-		scale_x0 = lhs.random(n=self.n_ensemble)
+		scale_x0 = lhs.random(n=self.n_chains)
 		lbs = [x[0] for x in mod_prob.bounds]
 		ubs = [x[1] for x in mod_prob.bounds]
 		x0 = qmc.scale(scale_x0, l_bounds=lbs, u_bounds=ubs)
 		self.x0 = list(x0)
 		sampler = sample.AdaptiveParallelTemperingSampler(
 			internal_sampler=sample.AdaptiveMetropolisSampler(),
-			n_chains=self.n_ensemble
+			n_chains=self.n_chains
 			)
 		sampler.initialize(mod_prob.problem, list(x0))
-
-		self.og_neglog_post = []
-		# change the history of each internal 
-		# sampler to save objective function calls
-		for internal_sampler in sampler.samplers:
-			history_options = history.HistoryOptions(trace_record=True)
-			hist_opts = history.HistoryOptions.assert_instance(history_options)
-			internal_sampler.neglogpost.__setattr__(
-				"history", 
-				mod_prob.problem.objective.create_history(
-					"ch1",
-					x_names=mod_prob.problem.objective.x_names,
-					options=hist_opts
-					)
-				)
-			self.og_neglog_post.append(internal_sampler.neglogpost)
-		
-		"""history_options = history.HistoryOptions(trace_record=True)
-		hist_opts = history.HistoryOptions.assert_instance(history_options)
-		mod_prob.problem.objective.history = mod_prob.problem.objective.create_history(
-					"ch1",
-					x_names=mod_prob.problem.objective.x_names,
-					options=hist_opts
-					)"""
-		
 
 		for internal_sampler in sampler.samplers:
 			internal_sampler.neglogpost = self.model_problem.log_likelihood_wrapper
 		
 		self.sampler = sampler
 
+	def create_posterior_ensemble(self):
+		sampler = self.sampler
+		samples = sampler.get_samples()
+
+		print(samples.trace_x.shape)
+
+		# get the lowest temperature chain index
+		# Note: remember that beta is the inverse of the temperature so 
+		# we want the chain with the max beta
+		ch_idx = np.argmax(samples.betas)
+		chain = np.array(samples.trace_x[ch_idx, :, :])
+		burn_in_idx = burn_in_by_sequential_geweke(chain)
+
+		trim_trace_x = samples.trace_x[ch_idx, burn_in_idx:, :]
+		trim_trace_llhs = samples.trace_neglogpost[ch_idx, burn_in_idx:]
+		trim_trace_priors = samples.trace_neglogprior[ch_idx, burn_in_idx:]
+		choice_idxs = np.random.choice(range(0, trim_trace_llhs.shape[0]), size=self.n_ensemble, replace=False)
+		posterior_samples = trim_trace_x[choice_idxs, :]
+		posterior_llhs = trim_trace_llhs[choice_idxs]
+		posterior_priors = trim_trace_priors[choice_idxs]
+		return burn_in_idx, posterior_samples, posterior_llhs, posterior_priors
+
+
 	def process_results(self):
 		sampler = self.sampler
 		algo_specific_info = {}
 		algo_specific_info["betas"] = sampler.betas
+		bi_idx, post_samples, post_llhs, post_pris = self.create_posterior_ensemble()
+		algo_specific_info["burn_in_idx"] = bi_idx
 
 		all_results = {}
 		all_results["seed"] = self.seed
 		all_results["n_ensemble"] = self.n_ensemble
 		all_results["method"] = self.method
 		all_results["problem"] = self.model_problem.model_name
-		#all_results["posterior_samples"] = poco_results["x"][-1, :, :]
-		#all_results["posterior_weights"] = np.exp(poco_results["logw"])
-		#all_results["posterior_llh"] = poco_results["logl"][-1, :]
 
 		all_samples = np.array([x.trace_x for x in sampler.samplers])
 		all_llh = np.array([x.trace_neglogpost for x in sampler.samplers])
 		n_fun_calls = self.model_problem.n_fun_calls
+		
+		all_results["posterior_samples"] = post_samples
+		all_results["posterior_weights"] = np.ones(shape=len(post_llhs))
+		all_results["posterior_llh"] = post_llhs
+		all_results["posterior_priors"] = post_pris
+
 		all_results["all_samples"] = all_samples
 		all_results["all_llh"] = all_llh
 		all_results["n_fun_calls"] = n_fun_calls
