@@ -44,8 +44,6 @@ class pestoSampler(BayesianInference):
 		sampler = self.sampler
 		samples = sampler.get_samples()
 
-		print(samples.trace_x.shape)
-
 		# get the lowest temperature chain index
 		# Note: remember that beta is the inverse of the temperature so 
 		# we want the chain with the max beta
@@ -69,6 +67,8 @@ class pestoSampler(BayesianInference):
 		algo_specific_info["betas"] = sampler.betas
 		bi_idx, post_samples, post_llhs, post_pris = self.create_posterior_ensemble()
 		algo_specific_info["burn_in_idx"] = bi_idx
+		algo_specific_info["n_chains"] = self.n_chains
+		algo_specific_info["n_iter"] = self.n_iter
 
 		all_results = {}
 		all_results["seed"] = self.seed
