@@ -1,10 +1,7 @@
 import petab
-from pprint import pprint
-from functools import update_wrapper
 from petab.v1.parameters import get_priors_from_df
 from scipy.stats import uniform, norm
 import pypesto.objective.roadrunner as pypesto_rr
-from pypesto.objective import AggregatedObjective
 class ModelProblem():
 	def __init__(self, model_string):
 		self.model_name = model_string
@@ -28,7 +25,6 @@ class ModelProblem():
 				relative_tolerance = 1e-16,
 				absolute_tolerance = 1e-8
 				)
-		#print(problem.objective.__dict__.keys())
 			problem.objective.solver_options = solver_options
 
 		self.problem = problem
