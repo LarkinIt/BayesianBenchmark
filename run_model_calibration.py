@@ -32,7 +32,13 @@ def run_model_calibration(args):
             args.n_chains
             )
     else:
-        sampler = pocoSampler(seed, n_ensemble, mod_prob, n_cpus, method)
+        sampler = pocoSampler(
+            seed,
+            n_ensemble,
+            mod_prob,
+            n_cpus,
+            method
+            )
     sampler.initialize()
     results = sampler.run()
 
