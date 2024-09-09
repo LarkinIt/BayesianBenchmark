@@ -45,6 +45,8 @@ class pocoSampler(BayesianInference):
         sampler = self.sampler
         poco_results = sampler.results 
 
+
+
         algo_specific_info = {}
         algo_specific_info["precondition"] = self.precondition
         algo_specific_info["efficiency"] = poco_results["efficiency"]
@@ -52,23 +54,46 @@ class pocoSampler(BayesianInference):
         algo_specific_info["effective_ss"] = poco_results["ess"]
         algo_specific_info["betas"] = poco_results["beta"]
         algo_specific_info["u"] = poco_results["u"]
+        algo_specific_info["acceptance"] = poco_results["accept"]
         
         all_results = {}
         all_results["seed"] = self.seed
         all_results["n_ensemble"] = self.n_ensemble
         all_results["method"] = self.method
         all_results["problem"] = self.model_problem.model_name
-        all_results["acceptance"] = poco_results["accept"]
         
-        all_results["posterior_samples"] = poco_results["x"][-1, :, :]
-        all_results["posterior_weights"] = np.exp(poco_results["logw"])
-        all_results["posterior_llh"] = poco_results["logl"][-1, :]
-        all_results["posterior_priors"] = poco_results["logp"][-1, :]
-        
+        n_iter = len(poco_results["beta"])
+        all_results["n_iter"] = n_iter
+        all_results["iters"] = poco_results["beta"]
+        all_results["n_chains"] = self.n_ensemble
         all_results["all_samples"] = poco_results["x"]
-        all_results["all_llh"] = poco_results["logl"]
+        all_results["all_llhs"] = poco_results["logl"]
+        all_results["all_weights"] = np.exp(poco_results["logw"]).reshape(n_iter, self.n_ensemble)
+        all_priors = np.exp(poco_results["logp"])
+        all_results["all_priors"] = all_priors
+
+        all_results["posterior_samples"] = poco_results["x"][-1, :, :]
+        all_results["posterior_weights"] = all_results["all_weights"][-1,:]
+        all_results["posterior_llhs"] = poco_results["logl"][-1, :]
+        all_results["posterior_priors"] = all_priors[-1, :]
+        
         all_results["n_fun_calls"] = sampler.calls
         all_results["algo_specific_info"] = algo_specific_info
+
+        print("SHAPE SUMMARY: \n==================\n")
+        print(f"n_iter: {n_iter}")
+        print(f"iters: {all_results["iters"].shape}")
+        print(f"n_chains: {all_results["n_chains"]}")
+        print("-------------")
+        print(f"all_samples: {all_results["all_samples"].shape}")
+        print(f"all_weights: {all_results["all_weights"].shape}")
+        print(f"all_llhs: {all_results["all_llhs"].shape}")
+        print(f"all_priors: {all_results["all_priors"].shape}")
+        print()
+        print(f"posterior_samples: {all_results["posterior_samples"].shape}")
+        print(f"posterior_weights: {all_results["posterior_weights"].shape}")
+        print(f"posterior_llhs: {all_results["posterior_llhs"].shape}")
+        print(f"posterior_priors: {all_results["posterior_priors"].shape}")
         return all_results
             
     def run(self):

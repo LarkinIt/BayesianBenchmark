@@ -67,8 +67,6 @@ class pestoSampler(BayesianInference):
 		algo_specific_info["betas"] = sampler.betas
 		bi_idx, post_samples, post_llhs, post_pris = self.create_posterior_ensemble()
 		algo_specific_info["burn_in_idx"] = bi_idx
-		algo_specific_info["n_chains"] = self.n_chains
-		algo_specific_info["n_iter"] = self.n_iter
 
 		all_results = {}
 		all_results["seed"] = self.seed
@@ -76,19 +74,47 @@ class pestoSampler(BayesianInference):
 		all_results["method"] = self.method
 		all_results["problem"] = self.model_problem.model_name
 
-		all_samples = np.array([x.trace_x for x in sampler.samplers])
-		all_llh = np.array([x.trace_neglogpost for x in sampler.samplers])
-		n_fun_calls = self.model_problem.n_fun_calls
+		all_results["n_iter"] = self.n_iter+1
+		all_results["iters"] = np.array(range(self.n_iter+1))
+		all_results["n_chains"] = self.n_chains
 		
+		all_samples = np.array([x.trace_x for x in sampler.samplers])
+		all_samples = np.swapaxes(all_samples, 0, 1)
+		all_weights = np.ones(shape=all_samples.shape[:-1])
+		all_llhs = np.array([x.trace_neglogpost for x in sampler.samplers])
+		all_llhs = np.swapaxes(all_llhs, 0, 1)
+		all_priors = np.array([x.trace_neglogprior for x in sampler.samplers])
+		all_priors = np.swapaxes(all_priors, 0, 1)
+		
+		all_results["all_samples"] = all_samples
+		all_results["all_weights"] = all_weights
+		all_results["all_llhs"] = all_llhs
+		all_results["all_priors"] = all_priors
+
 		all_results["posterior_samples"] = post_samples
 		all_results["posterior_weights"] = np.ones(shape=len(post_llhs))
-		all_results["posterior_llh"] = post_llhs
+		all_results["posterior_llhs"] = post_llhs
 		all_results["posterior_priors"] = post_pris
 
-		all_results["all_samples"] = all_samples
-		all_results["all_llh"] = all_llh
+		n_fun_calls = self.model_problem.n_fun_calls
 		all_results["n_fun_calls"] = n_fun_calls
 		all_results["algo_specific_info"] = algo_specific_info
+		
+		print("SHAPE SUMMARY: \n==================\n")
+		print(f"n_iter: {all_results["n_iter"]}")
+		print(f"iters: {all_results["iters"].shape}")
+		print(f"n_chains: {all_results["n_chains"]}")
+		print(f"betas: {all_results["algo_specific_info"]["betas"].shape}")
+		print("-------------")
+		print(f"all_samples: {all_results["all_samples"].shape}")
+		print(f"all_weights: {all_results["all_weights"].shape}")
+		print(f"all_llhs: {all_results["all_llhs"].shape}")
+		print(f"all_priors: {all_results["all_priors"].shape}")
+		print()
+		print(f"posterior_samples: {all_results["posterior_samples"].shape}")
+		print(f"posterior_weights: {all_results["posterior_weights"].shape}")
+		print(f"posterior_llhs: {all_results["posterior_llhs"].shape}")
+		print(f"posterior_priors: {all_results["posterior_priors"].shape}")
 		return all_results
 			
 	def run(self):
