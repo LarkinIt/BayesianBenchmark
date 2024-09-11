@@ -32,6 +32,7 @@ class pocoSampler(BayesianInference):
         sampler = pc.Sampler(
             prior=prior,
             likelihood=llh,
+            likelihood_kwargs={"mode":"neg"},
             n_effective=self.n_ensemble,
             n_active=self.n_ensemble,
             precondition=self.precondition,
@@ -45,8 +46,6 @@ class pocoSampler(BayesianInference):
         sampler = self.sampler
         poco_results = sampler.results 
 
-
-
         algo_specific_info = {}
         algo_specific_info["precondition"] = self.precondition
         algo_specific_info["efficiency"] = poco_results["efficiency"]
@@ -55,7 +54,8 @@ class pocoSampler(BayesianInference):
         algo_specific_info["betas"] = poco_results["beta"]
         algo_specific_info["u"] = poco_results["u"]
         algo_specific_info["acceptance"] = poco_results["accept"]
-        
+        algo_specific_info["calls_by_iter"] = poco_results["calls"]
+
         all_results = {}
         all_results["seed"] = self.seed
         all_results["n_ensemble"] = self.n_ensemble

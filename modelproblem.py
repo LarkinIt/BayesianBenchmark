@@ -58,12 +58,15 @@ class ModelProblem():
 		return prior_list
 
 
-	def log_likelihood_wrapper(self, x):
+	def log_likelihood_wrapper(self, x, mode="pos"):
 		try:
 			result = self.problem.objective(x, mode="mode_fun", return_dict=True)
-			fval = -1*result["fval"]
+			fval = result["fval"]
 		except:
-			fval = -1e10
+			fval = 1e10
+
+		if mode == "neg":
+			fval = -1*fval
 		# ! IMPORTANT: self.n_fun_calls only tracks total number of function calls
 		# ! when using PT-MCMC since it does NOT run in parallel
 		# ! You can only use this with pocoMC when n_cpus = 1

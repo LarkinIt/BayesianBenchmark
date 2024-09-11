@@ -52,7 +52,7 @@ class pestoSampler(BayesianInference):
 		burn_in_idx = burn_in_by_sequential_geweke(chain)
 
 		trim_trace_x = samples.trace_x[ch_idx, burn_in_idx:, :]
-		trim_trace_llhs = samples.trace_neglogpost[ch_idx, burn_in_idx:]
+		trim_trace_llhs = -1*samples.trace_neglogpost[ch_idx, burn_in_idx:]
 		trim_trace_priors = samples.trace_neglogprior[ch_idx, burn_in_idx:]
 		choice_idxs = np.random.choice(range(0, trim_trace_llhs.shape[0]), size=self.n_ensemble, replace=False)
 		posterior_samples = trim_trace_x[choice_idxs, :]
@@ -81,7 +81,7 @@ class pestoSampler(BayesianInference):
 		all_samples = np.array([x.trace_x for x in sampler.samplers])
 		all_samples = np.swapaxes(all_samples, 0, 1)
 		all_weights = np.ones(shape=all_samples.shape[:-1])
-		all_llhs = np.array([x.trace_neglogpost for x in sampler.samplers])
+		all_llhs = -1*np.array([x.trace_neglogpost for x in sampler.samplers])
 		all_llhs = np.swapaxes(all_llhs, 0, 1)
 		all_priors = np.array([x.trace_neglogprior for x in sampler.samplers])
 		all_priors = np.swapaxes(all_priors, 0, 1)
