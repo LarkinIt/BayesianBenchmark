@@ -38,7 +38,6 @@ class pocoSampler(BayesianInference):
             precondition=self.precondition,
             random_state=self.seed,
             pool=pool_no,
-            sample="rwm"
         )
         self.sampler = sampler
 
@@ -79,21 +78,6 @@ class pocoSampler(BayesianInference):
         
         all_results["n_fun_calls"] = sampler.calls
         all_results["algo_specific_info"] = algo_specific_info
-
-        print("SHAPE SUMMARY: \n==================\n")
-        print(f"n_iter: {n_iter}")
-        print(f"iters: {all_results["iters"].shape}")
-        print(f"n_chains: {all_results["n_chains"]}")
-        print("-------------")
-        print(f"all_samples: {all_results["all_samples"].shape}")
-        print(f"all_weights: {all_results["all_weights"].shape}")
-        print(f"all_llhs: {all_results["all_llhs"].shape}")
-        print(f"all_priors: {all_results["all_priors"].shape}")
-        print()
-        print(f"posterior_samples: {all_results["posterior_samples"].shape}")
-        print(f"posterior_weights: {all_results["posterior_weights"].shape}")
-        print(f"posterior_llhs: {all_results["posterior_llhs"].shape}")
-        print(f"posterior_priors: {all_results["posterior_priors"].shape}")
         return all_results
             
     def run(self):
