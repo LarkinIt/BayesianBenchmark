@@ -1,0 +1,13 @@
+observableId	observableName	observableFormula
+TNF	TNF	TNF
+TNFRi	TNFR(st~i)	TNFR(st~i)
+TNFRa	TNFR(st~a)	TNFR(st~a)
+IKKi	IKK(s~I)	IKK(s~I)
+IKKa	IKK(s~A)	IKK(s~A)
+cNFkB	NFkB(IkB,loc~c)	NFkB(IkB,loc~c)
+nNFkB	NFkB(IkB,loc~n)	NFkB(IkB,loc~n)
+cIkB	IkB(NFkB,loc~c)	IkB(NFkB,loc~c)
+nIkB	IkB(NFkB,loc~n)	IkB(NFkB,loc~n)
+cNFkB_IkB	NFkB(IkB!0,loc~c).IkB(NFkB!0,loc~c)	NFkB(IkB!0,loc~c).IkB(NFkB!0,loc~c)
+nNFkB_IkB	NFkB(IkB!0,loc~n).IkB(NFkB!0,loc~n)	NFkB(IkB!0,loc~n).IkB(NFkB!0,loc~n)
+A20	A20	A20

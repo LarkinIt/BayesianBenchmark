@@ -1,0 +1,24 @@
+parameterId	parameterScale	lowerBound	upperBound	nominalValue	estimate
+k_b	log10	1e-05	100000.0		1
+k_f	log10	1e-05	100000.0		1
+k_a	log10	1e-05	100000.0		1
+k_4	log10	1e-05	100000.0		1
+k_i1	log10	1e-05	100000.0		1
+k_e1	log10	1e-05	100000.0		1
+k_t2a	log10	1e-05	100000.0		1
+k_t1a	log10	1e-05	100000.0		1
+k_i2	log10	1e-05	100000.0		1
+k_e2	log10	1e-05	100000.0		1
+k_e2a	log10	1e-05	100000.0		1
+c_4a	log10	1e-05	100000.0		1
+c_5a	log10	1e-05	100000.0		1
+c_1a	log10	1e-05	100000.0		1
+k_a1a	log10	1e-05	100000.0		1
+k_d1a	log10	1e-05	100000.0		1
+c_3	log10	1e-05	100000.0		1
+c_1	log10	1e-05	100000.0		1
+k_ikk	log10	1e-05	100000.0		1
+k_tnfr	log10	1e-05	100000.0		1
+TNFRin	log10	1e-05	100000.0		1
+IKKin	log10	1e-05	100000.0		1
+boundc	log10	1e-05	100000.0		1
