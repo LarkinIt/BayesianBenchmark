@@ -16,6 +16,12 @@ def run_model_calibration(args):
     n_ensemble = args.n_ensemble
     n_cpus = args.n_cpus
     output_dir = args.output_dir
+
+    # Create directory if it does not already exist
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    # Set RNG seed
     np.random.seed(seed=seed)
 
     mod_prob = ModelProblem(problem)
