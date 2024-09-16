@@ -29,6 +29,10 @@ class pocoSampler(BayesianInference):
             pool_no = self.n_cpus
         elif self.n_cpus == 0:
             pool_no = os.cpu_count()
+
+        n_steps = None
+        if mod_prob.model_name == "Michaelis_Menten":
+            n_steps = 10
         sampler = pc.Sampler(
             prior=prior,
             likelihood=llh,
@@ -38,6 +42,7 @@ class pocoSampler(BayesianInference):
             precondition=self.precondition,
             random_state=self.seed,
             pool=pool_no,
+            n_steps=n_steps
         )
         self.sampler = sampler
 
@@ -67,12 +72,15 @@ class pocoSampler(BayesianInference):
         all_results["n_chains"] = self.n_ensemble
         all_results["all_samples"] = poco_results["x"]
         all_results["all_llhs"] = poco_results["logl"]
-        all_results["all_weights"] = np.exp(poco_results["logw"]).reshape(n_iter, self.n_ensemble)
+        logw = sampler.particles.get("logw")
+        weights = np.exp(logw - np.max(logw))
+        norm_ws = np.divide(weights.T, np.sum(weights, axis=1)).T
+        all_results["all_weights"] = norm_ws
         all_priors = np.exp(poco_results["logp"])
         all_results["all_priors"] = all_priors
 
         all_results["posterior_samples"] = poco_results["x"][-1, :, :]
-        all_results["posterior_weights"] = all_results["all_weights"][-1,:]
+        all_results["posterior_weights"] = all_results["all_weights"][-1, :]
         all_results["posterior_llhs"] = poco_results["logl"][-1, :]
         all_results["posterior_priors"] = all_priors[-1, :]
         
