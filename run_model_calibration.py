@@ -2,12 +2,14 @@ import os
 import pickle
 import argparse
 import numpy as np
+from memory_profiler import profile
 from modelproblem import ModelProblem
 from pocosampler import pocoSampler
 from pestosampler import pestoSampler
 
 os.environ["OMP_NUM_THREADS"] = "1"
 
+@profile
 def run_model_calibration(args):
     print(args)
     seed = args.seed
