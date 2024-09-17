@@ -92,7 +92,7 @@ class pestoSampler(BayesianInference):
 		all_results["all_priors"] = all_priors
 
 		all_results["posterior_samples"] = post_samples
-		all_results["posterior_weights"] = [1/len(post_llhs) for x in post_llhs]
+		all_results["posterior_weights"] = np.array([1/len(post_llhs) for x in post_llhs])
 		all_results["posterior_llhs"] = post_llhs
 		all_results["posterior_priors"] = post_pris
 
