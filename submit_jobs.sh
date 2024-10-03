@@ -2,7 +2,7 @@
 
 seeds=({0..99..1})
 declare -a probs=("Michaelis_Menten")
-declare -a methods=("smc", "pmc")
+declare -a methods=("smc" "pmc")
 n_ensemble=1000
 ##### Declare anything else needed to pass as an arg below
 
