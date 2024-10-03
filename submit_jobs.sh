@@ -15,7 +15,7 @@ for prob in "${probs[@]}"; do
 				mkdir -p $outdir
 			fi
 
-			logdir="outdir/logs/"
+			logdir="$outdir/logs/"
 			if [ ! -d "$logdir" ]; then
 				mkdir -p $logdir
 			fi
@@ -26,11 +26,7 @@ for prob in "${probs[@]}"; do
 
 			command="sbatch --job-name=$job_name --output=$out_file --error=$err_file --export=method=$method,problem=$prob,seed=$seed,output_dir=$outdir,n_ensemble=$n_ensemble single_slurm_job.sh"
 			echo "$command"
-			#sbatch --job-name=$job_name --output=$out_file --error=$err_file --export=method=$method,problem=$prob,seed=$seed,output_dir=$outdir,n_ensemble=$n_ensemble single_slurm_job.sh
-			#export goal_rna_method=$method
-			#export rna_heur_weight=$weight
-			#export seed=$seed 
-			#export output_dir=$prefix
+			sbatch --job-name=$job_name --output=$out_file --error=$err_file --export=method=$method,problem=$prob,seed=$seed,output_dir=$outdir,n_ensemble=$n_ensemble single_slurm_job.sh
 			#bash single_slurm_job.sh
 
 		done 

@@ -2,9 +2,8 @@
 #SBATCH -N 1
 #SBATCH -p any_cpu
 #SBATCH --cpus-per-task=32
-#SBATCH --mail-type=ALL
+#SBATCH --mail-type=END
 #SBATCH --mail-user=caroline.larkin@pitt.edu
-#SBATCH --mem=92G
 
 export PATH=/net/dali/home/mscbio/cil8/.local/bin:$PATH
 
