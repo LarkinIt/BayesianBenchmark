@@ -9,5 +9,5 @@ problems:
   - observables_mRNA_self_reg.tsv
   sbml_files:
   - model_mRNA_self_reg.xml
-  visualization_files:
-  - visualizationSpecification_mRNA_self_reg.tsv
+# visualization_files:
+#  - visualizationSpecification_mRNA_self_reg.tsv
