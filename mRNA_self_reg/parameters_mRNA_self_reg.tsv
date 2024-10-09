@@ -1,0 +1,7 @@
+parameterId	parameterScale	lowerBound	upperBound	nominalValue	estimate
+param0	log10	1	100	10	0
+param1	log10	0	50	0.5	1
+param2	log10	0	10	10	1
+param3	log10	0	50	2	1
+param4	log10	0	10	1	1
+dummy	log10	1	100	5	1

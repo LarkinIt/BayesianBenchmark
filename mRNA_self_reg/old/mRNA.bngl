@@ -9,6 +9,7 @@ begin parameters
     param2 10
     param3 2
     param4 1
+    dummy 5
   
 end parameters
 
@@ -35,17 +36,10 @@ begin observables
 
 end observables
 
-begin functions
-
-    tomRNA()     p1 * param2
-    frommRNA()   p2 * param3
-
-end functions
-
 begin reaction rules
 
-    R1: 0 -> mRNA   tomRNA()
-    R2: mRNA -> 0   frommRNA()
+    R1: 0 -> mRNA   p1 * param2
+    R2: mRNA -> 0   p2 * param3
     R3: mRNA -> 0   param4
     R4: mRNA -> p1  param0
     R5: p1 -> p2    param1
