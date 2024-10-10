@@ -31,7 +31,7 @@ class pocoSampler(BayesianInference):
             pool_no = os.cpu_count()
 
         n_steps = None
-        if mod_prob.model_name == "Michaelis_Menten":
+        if mod_prob.n_dim < 10:
             n_steps = 10
         sampler = pc.Sampler(
             prior=prior,
