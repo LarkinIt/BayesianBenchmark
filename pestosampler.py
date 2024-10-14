@@ -23,18 +23,25 @@ class pestoSampler(BayesianInference):
 
 	def initialize(self):
 		mod_prob = self.model_problem
+
 		lhs = qmc.LatinHypercube(d=mod_prob.n_dim, seed=self.seed)
 		scale_x0 = lhs.random(n=self.n_chains)
 		lbs = [x[0] for x in mod_prob.bounds]
 		ubs = [x[1] for x in mod_prob.bounds]
 		x0 = qmc.scale(scale_x0, l_bounds=lbs, u_bounds=ubs)
+
+		# apply transformations if necessary
+		for i in range(x0.shape[1]):
+			if mod_prob.prior_info[i][2] == "log10":
+				x0[:, i] = np.log10(x0[:, i])
 		self.x0 = list(x0)
 		sampler = sample.AdaptiveParallelTemperingSampler(
 			internal_sampler=sample.AdaptiveMetropolisSampler(),
 			n_chains=self.n_chains
 			)
+	
 		sampler.initialize(mod_prob.problem, list(x0))
-
+			
 		for internal_sampler in sampler.samplers:
 			internal_sampler.neglogpost = self.model_problem.log_likelihood_wrapper
 		
