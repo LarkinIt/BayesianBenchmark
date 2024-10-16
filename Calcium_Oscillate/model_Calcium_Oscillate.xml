@@ -13,10 +13,9 @@
       <compartment id="cell" size="1"/>
     </listOfCompartments>
     <listOfSpecies>
-      <species id="S1" compartment="cell" initialAmount="1" name="Null()"/>
-      <species id="S2" compartment="cell" initialAmount="6.021435" name="Ga()"/>
-      <species id="S3" compartment="cell" initialAmount="6.021435" name="PLC()"/>
-      <species id="S4" compartment="cell" initialAmount="6.021435" name="Ca()"/>
+      <species id="S1" compartment="cell" initialAmount="6.021435" name="Ga()"/>
+      <species id="S2" compartment="cell" initialAmount="6.021435" name="PLC()"/>
+      <species id="S3" compartment="cell" initialAmount="6.021435" name="Ca()"/>
     </listOfSpecies>
     <listOfParameters>
       <!-- Independent variables -->
@@ -41,7 +40,6 @@
       <parameter id="Ga" constant="false"/>
       <parameter id="PLC" constant="false"/>
       <parameter id="Ca" constant="false"/>
-      <parameter id="NULL" constant="false"/>
       <!-- Global functions -->
       <parameter id="_rateLaw3" constant="false"/>
       <parameter id="_rateLaw4" constant="false"/>
@@ -50,7 +48,7 @@
     </listOfParameters>
     <listOfInitialAssignments>
       <!-- All initial values -->
-      <initialAssignment symbol="S2">
+      <initialAssignment symbol="S1">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <power/>
@@ -59,7 +57,7 @@
           </apply>
         </math>
       </initialAssignment>
-      <initialAssignment symbol="S3">
+      <initialAssignment symbol="S2">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <power/>
@@ -68,7 +66,7 @@
           </apply>
         </math>
       </initialAssignment>
-      <initialAssignment symbol="S4">
+      <initialAssignment symbol="S3">
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <apply>
             <power/>
@@ -122,7 +120,7 @@
             <apply>
               <plus/>
               <cn> 0 </cn>
-              <ci> S2 </ci>
+              <ci> S1 </ci>
             </apply>
           </math>
       </assignmentRule>
@@ -131,7 +129,7 @@
             <apply>
               <plus/>
               <cn> 0 </cn>
-              <ci> S3 </ci>
+              <ci> S2 </ci>
             </apply>
           </math>
       </assignmentRule>
@@ -140,16 +138,7 @@
             <apply>
               <plus/>
               <cn> 0 </cn>
-              <ci> S4 </ci>
-            </apply>
-          </math>
-      </assignmentRule>
-      <assignmentRule variable="NULL">
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <plus/>
-              <cn> 0 </cn>
-              <ci> S1 </ci>
+              <ci> S3 </ci>
             </apply>
           </math>
       </assignmentRule>
@@ -241,149 +230,134 @@
     </listOfRules>
     <listOfReactions>
       <reaction id="R1" reversible="false">
-        <listOfReactants>
-          <speciesReference species="S1"/>
-        </listOfReactants>
         <listOfProducts>
           <speciesReference species="S1"/>
-          <speciesReference species="S2"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> _rateLaw1 </ci>
-              <ci> S1 </ci>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
       <reaction id="R2" reversible="false">
         <listOfReactants>
-          <speciesReference species="S2"/>
+          <speciesReference species="S1"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="S2"/>
-          <speciesReference species="S2"/>
+          <speciesReference species="S1"/>
+          <speciesReference species="S1"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> _rateLaw2 </ci>
-              <ci> S2 </ci>
+              <ci> S1 </ci>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
       <reaction id="R3" reversible="false">
         <listOfReactants>
+          <speciesReference species="S1"/>
           <speciesReference species="S2"/>
-          <speciesReference species="S3"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="S3"/>
+          <speciesReference species="S2"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> _rateLaw3 </ci>
+              <ci> S1 </ci>
               <ci> S2 </ci>
-              <ci> S3 </ci>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
       <reaction id="R4" reversible="false">
         <listOfReactants>
-          <speciesReference species="S2"/>
-          <speciesReference species="S4"/>
+          <speciesReference species="S1"/>
+          <speciesReference species="S3"/>
         </listOfReactants>
         <listOfProducts>
-          <speciesReference species="S4"/>
+          <speciesReference species="S3"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> _rateLaw4 </ci>
-              <ci> S2 </ci>
-              <ci> S4 </ci>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="R5" reversible="false">
-        <listOfReactants>
-          <speciesReference species="S2"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="S2"/>
-          <speciesReference species="S3"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> _rateLaw5 </ci>
-              <ci> S2 </ci>
-            </apply>
-          </math>
-        </kineticLaw>
-      </reaction>
-      <reaction id="R6" reversible="false">
-        <listOfReactants>
-          <speciesReference species="S1"/>
-          <speciesReference species="S3"/>
-        </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="S1"/>
-        </listOfProducts>
-        <kineticLaw>
-          <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-              <times/>
-              <ci> _rateLaw6 </ci>
               <ci> S1 </ci>
               <ci> S3 </ci>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
-      <reaction id="R7" reversible="false">
+      <reaction id="R5" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S1"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S1"/>
+          <speciesReference species="S2"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw5 </ci>
+              <ci> S1 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R6" reversible="false">
         <listOfReactants>
           <speciesReference species="S2"/>
         </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw6 </ci>
+              <ci> S2 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R7" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S1"/>
+        </listOfReactants>
         <listOfProducts>
-          <speciesReference species="S2"/>
-          <speciesReference species="S4"/>
+          <speciesReference species="S1"/>
+          <speciesReference species="S3"/>
         </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> _rateLaw7 </ci>
-              <ci> S2 </ci>
+              <ci> S1 </ci>
             </apply>
           </math>
         </kineticLaw>
       </reaction>
       <reaction id="R8" reversible="false">
         <listOfReactants>
-          <speciesReference species="S1"/>
-          <speciesReference species="S4"/>
+          <speciesReference species="S3"/>
         </listOfReactants>
-        <listOfProducts>
-          <speciesReference species="S1"/>
-        </listOfProducts>
         <kineticLaw>
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
               <ci> _rateLaw8 </ci>
-              <ci> S1 </ci>
-              <ci> S4 </ci>
+              <ci> S3 </ci>
             </apply>
           </math>
         </kineticLaw>
