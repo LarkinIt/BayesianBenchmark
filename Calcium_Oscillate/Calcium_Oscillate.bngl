@@ -37,21 +37,21 @@ begin species
 end species
 
 begin observables 
-    Molecules    G       Ga()
-    Molecules    P       PLC()
-    Molecules    C       Ca()
+    Molecules    Ga       Ga()
+    Molecules    PLC       PLC()
+    Molecules    Ca       Ca()
     Molecules    NULL    Null()
 end observables
 
 begin reaction rules
     Null() -> Ga() + Null()     10^k1
     Ga() -> Ga() + Ga()         10^k2
-    Ga() + PLC() -> PLC()       10^k3/(10^K4+G)      #Sat(k3,K4)
-    Ga() + Ca() -> Ca()         10^k5/(10^K6+G)      #Sat(k5,K6)
+    Ga() + PLC() -> PLC()       10^k3/(10^K4+Ga)      #Sat(k3,K4)
+    Ga() + Ca() -> Ca()         10^k5/(10^K6+Ga)      #Sat(k5,K6)
     Ga() -> PLC() + Ga()        10^k7
-    PLC() + Null() -> Null()    10^k8/(10^K9+P)      #Sat(k8,K9)
+    PLC() + Null() -> Null()    10^k8/(10^K9+PLC)      #Sat(k8,K9)
     Ga() -> Ca() + Ga()         10^k10
-    Ca() + Null() -> Null()     10^k11/(10^K12+C)    #Sat(k11,K12)
+    Ca() + Null() -> Null()     10^k11/(10^K12+Ca)    #Sat(k11,K12)
 end reaction rules
 end model
 

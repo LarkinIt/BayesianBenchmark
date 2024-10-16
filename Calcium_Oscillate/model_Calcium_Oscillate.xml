@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created by BioNetGen 2.9.0  -->
 <sbml xmlns="http://www.sbml.org/sbml/level2/version3" level="2" version="3">
-  <model id="calcium">
+  <model id="Calcium_Oscillate">
     <listOfUnitDefinitions>
       <unitDefinition id="substance" name="substance">
         <listOfUnits>
@@ -38,9 +38,9 @@
       <parameter id="dummy" value="1"/>
       <!-- Dependent variables -->
       <!-- Observables -->
-      <parameter id="G" constant="false"/>
-      <parameter id="P" constant="false"/>
-      <parameter id="C" constant="false"/>
+      <parameter id="Ga" constant="false"/>
+      <parameter id="PLC" constant="false"/>
+      <parameter id="Ca" constant="false"/>
       <parameter id="NULL" constant="false"/>
       <!-- Global functions -->
       <parameter id="_rateLaw3" constant="false"/>
@@ -117,7 +117,7 @@
     </listOfInitialAssignments>
     <listOfRules>
       <!-- Observables -->
-      <assignmentRule variable="G">
+      <assignmentRule variable="Ga">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <plus/>
@@ -126,7 +126,7 @@
             </apply>
           </math>
       </assignmentRule>
-      <assignmentRule variable="P">
+      <assignmentRule variable="PLC">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <plus/>
@@ -135,7 +135,7 @@
             </apply>
           </math>
       </assignmentRule>
-      <assignmentRule variable="C">
+      <assignmentRule variable="Ca">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <plus/>
@@ -170,7 +170,7 @@
                 <cn> 10 </cn>
                 <ci> K4 </ci>
               </apply>
-              <ci> G </ci>
+              <ci> Ga </ci>
             </apply>
           </apply>
         </math>
@@ -191,7 +191,7 @@
                 <cn> 10 </cn>
                 <ci> K6 </ci>
               </apply>
-              <ci> G </ci>
+              <ci> Ga </ci>
             </apply>
           </apply>
         </math>
@@ -212,7 +212,7 @@
                 <cn> 10 </cn>
                 <ci> K9 </ci>
               </apply>
-              <ci> P </ci>
+              <ci> PLC </ci>
             </apply>
           </apply>
         </math>
@@ -233,7 +233,7 @@
                 <cn> 10 </cn>
                 <ci> K12 </ci>
               </apply>
-              <ci> C </ci>
+              <ci> Ca </ci>
             </apply>
           </apply>
         </math>
