@@ -4,11 +4,11 @@ begin model
 
 begin parameters
 	param0 10
-	param1 0.5
-	param2 10
-	param3 2
-	param4 1
-	dummy 5
+	param1 10#0.5
+	param2 17.41449134#10
+	param3 0.05396495#2
+	param4 0.83169363#1
+	dummy 0.24461125
 end parameters
 
 begin molecule types
@@ -45,4 +45,4 @@ end model
 generate_network()
 writeSBML()
 
-simulate({method=>"ode",suffix=>"ode",t_end=>16, n_steps=>1000})
+simulate({method=>"ode",suffix=>"ode",t_end=>15, n_steps=>150})
