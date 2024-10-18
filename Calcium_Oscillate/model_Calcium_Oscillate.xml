@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by BioNetGen 2.9.0  -->
+<!-- Created by BioNetGen 2.9.2  -->
 <sbml xmlns="http://www.sbml.org/sbml/level2/version3" level="2" version="3">
   <model id="Calcium_Oscillate">
     <listOfUnitDefinitions>
@@ -36,6 +36,10 @@
       <parameter id="Ca_0" value="0.7797"/>
       <parameter id="dummy" value="1"/>
       <!-- Dependent variables -->
+      <parameter id="_rateLaw1" constant="true"/>
+      <parameter id="_rateLaw2" constant="true"/>
+      <parameter id="_rateLaw5" constant="true"/>
+      <parameter id="_rateLaw7" constant="true"/>
       <!-- Observables -->
       <parameter id="Ga" constant="false"/>
       <parameter id="PLC" constant="false"/>

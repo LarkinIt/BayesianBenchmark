@@ -43,12 +43,12 @@ end observables
 begin reaction rules
     0 -> Ga()                   10^k1
     Ga() -> Ga() + Ga()         10^k2
-    Ga() + PLC() -> PLC()       10^k3/(10^K4+Ga)      #Sat(k3,K4)
-    Ga() + Ca() -> Ca()         10^k5/(10^K6+Ga)      #Sat(k5,K6)
+    Ga() + PLC() -> PLC()       10^k3/(10^K4+Ga)
+    Ga() + Ca() -> Ca()         10^k5/(10^K6+Ga)
     Ga() -> PLC() + Ga()        10^k7
-    PLC() -> 0                  10^k8/(10^K9+PLC)      #Sat(k8,K9)
+    PLC() -> 0                  10^k8/(10^K9+PLC)
     Ga() -> Ca() + Ga()         10^k10
-    Ca() -> 0                   10^k11/(10^K12+Ca)    #Sat(k11,K12)
+    Ca() -> 0                   10^k11/(10^K12+Ca)
 end reaction rules
 end model
 
