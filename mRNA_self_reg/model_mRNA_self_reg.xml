@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by BioNetGen 2.9.0  -->
+<!-- Created by BioNetGen 2.9.2  -->
 <sbml xmlns="http://www.sbml.org/sbml/level2/version3" level="2" version="3">
   <model id="mRNA_self_reg">
     <listOfUnitDefinitions>
@@ -19,12 +19,18 @@
     </listOfSpecies>
     <listOfParameters>
       <!-- Independent variables -->
-      <parameter id="param0" value="10"/>
-      <parameter id="param1" value="0.5"/>
-      <parameter id="param2" value="10"/>
-      <parameter id="param3" value="2"/>
-      <parameter id="param4" value="1"/>
-      <parameter id="dummy" value="5"/>
+      <parameter id="log_param1" value="-0.30103"/>
+      <parameter id="log_param2" value="1"/>
+      <parameter id="log_param3" value="0.30103"/>
+      <parameter id="log_param4" value="0"/>
+      <parameter id="dummy" value="0"/>
+      <parameter id="log_param5" value="1"/>
+      <!-- Dependent variables -->
+      <parameter id="_rateLaw3" constant="true"/>
+      <parameter id="_rateLaw4" constant="true"/>
+      <parameter id="_rateLaw5" constant="true"/>
+      <parameter id="_rateLaw6" constant="true"/>
+      <parameter id="_rateLaw7" constant="true"/>
       <!-- Observables -->
       <parameter id="mRNA" constant="false"/>
       <parameter id="p1" constant="false"/>
@@ -35,6 +41,52 @@
     </listOfParameters>
     <listOfInitialAssignments>
       <!-- All initial values -->
+      <!-- Dependent variables -->
+      <initialAssignment symbol="_rateLaw3">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> log_param4 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw4">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> log_param5 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw5">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> log_param1 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw6">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> log_param4 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw7">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> log_param4 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
     </listOfInitialAssignments>
     <listOfRules>
       <!-- Observables -->
@@ -71,7 +123,11 @@
           <apply>
             <times/>
             <ci> p1 </ci>
-            <ci> param2 </ci>
+            <apply>
+              <power/>
+              <cn> 10 </cn>
+              <ci> log_param2 </ci>
+            </apply>
           </apply>
         </math>
       </assignmentRule>
@@ -80,7 +136,11 @@
           <apply>
             <times/>
             <ci> p2 </ci>
-            <ci> param3 </ci>
+            <apply>
+              <power/>
+              <cn> 10 </cn>
+              <ci> log_param3 </ci>
+            </apply>
           </apply>
         </math>
       </assignmentRule>
@@ -121,7 +181,7 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> param4 </ci>
+              <ci> _rateLaw3 </ci>
               <ci> S1 </ci>
             </apply>
           </math>
@@ -138,7 +198,7 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> param0 </ci>
+              <ci> _rateLaw4 </ci>
               <ci> S1 </ci>
             </apply>
           </math>
@@ -155,7 +215,7 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> param1 </ci>
+              <ci> _rateLaw5 </ci>
               <ci> S2 </ci>
             </apply>
           </math>
@@ -169,7 +229,7 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> param4 </ci>
+              <ci> _rateLaw6 </ci>
               <ci> S2 </ci>
             </apply>
           </math>
@@ -183,7 +243,7 @@
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
               <times/>
-              <ci> param4 </ci>
+              <ci> _rateLaw7 </ci>
               <ci> S3 </ci>
             </apply>
           </math>
