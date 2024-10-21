@@ -6,21 +6,20 @@ class Result:
 	def __init__(self, result_dict) -> None:
 		for key in result_dict:
 			setattr(self, key, result_dict[key])
-		if self.method == "ptmcmc":
-			burn_in_idx = self.algo_specific_info["burn_in_idx"]
-			n_chains = self.n_chains
+		#if self.method == "ptmcmc":
+			#burn_in_idx = self.algo_specific_info["burn_in_idx"]
+			#n_chains = self.n_chains
 			#print(f"{burn_in_idx}, \t{n_chains}")
-			self.n_fun_calls = (burn_in_idx+1)*n_chains
+			#self.n_fun_calls = (burn_in_idx+1)*n_chains
 
-	def get_sampling_ratio(self, par_bounds, par_idx=0, inlog=False) -> float:
+	def get_sampling_ratio(self, par_bounds, par_idx=0) -> float:
 		"""
 		Measures the ratio of the sampling space 
 		explored for a given parameter index
 		"""
-		bound_diff = par_bounds[par_idx][1] - par_bounds[par_idx][0]
+		bound_diff = 10**par_bounds[par_idx][1] - 10**par_bounds[par_idx][0]
 		par_samples = self.all_samples[:, :, par_idx]
-		if inlog:
-			par_samples = 10**par_samples
+		par_samples = 10**par_samples
 		max_val = np.max(par_samples)
 		min_val = np.min(par_samples)
 		sample_diff = max_val - min_val
@@ -65,8 +64,8 @@ class MethodResults:
 		all_llhs = [x.posterior_llhs for x in self.all_runs]
 		return np.array(all_llhs)
 	
-	def get_sampling_efficiency(self, bounds, par_idx, inlog=False) -> np.array:
-		all_ratios = [x.get_sampling_ratio(bounds, par_idx, inlog) for x in self.all_runs]
+	def get_sampling_efficiency(self, bounds, par_idx) -> np.array:
+		all_ratios = [x.get_sampling_ratio(bounds, par_idx) for x in self.all_runs]
 		return np.array(all_ratios)
 	
 	def get_convergence_times(self, llh_threshold):
