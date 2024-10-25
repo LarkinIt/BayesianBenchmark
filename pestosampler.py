@@ -30,10 +30,6 @@ class pestoSampler(BayesianInference):
 		ubs = [x[1] for x in mod_prob.bounds]
 		x0 = qmc.scale(scale_x0, l_bounds=lbs, u_bounds=ubs)
 
-		# apply transformations if necessary
-		for i in range(x0.shape[1]):
-			if mod_prob.prior_info[i][2] == "log10":
-				x0[:, i] = np.log10(x0[:, i])
 		self.x0 = list(x0)
 		sampler = sample.AdaptiveParallelTemperingSampler(
 			internal_sampler=sample.AdaptiveMetropolisSampler(),
