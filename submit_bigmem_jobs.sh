@@ -1,8 +1,8 @@
 #!/bin/bash
 
-seeds=(27 32 57)
+seeds=(13 17 18 22 26 29 36 48 84 86 97)
 declare -a probs=("Calcium_Oscillate")
-declare -a methods=("pmc")
+declare -a methods=("smc")
 n_ensemble=1000
 ##### Declare anything else needed to pass as an arg below
 
