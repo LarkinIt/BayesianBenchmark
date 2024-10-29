@@ -54,21 +54,21 @@ class pestoSampler(BayesianInference):
 		chain = np.array(samples.trace_x[ch_idx, :, :])
 		burn_in_idx = burn_in_by_sequential_geweke(chain)
 
-		trim_trace_x = samples.trace_x[ch_idx, burn_in_idx:, :]
-		trim_trace_llhs = -1*samples.trace_neglogpost[ch_idx, burn_in_idx:]
-		trim_trace_priors = samples.trace_neglogprior[ch_idx, burn_in_idx:]
-		choice_idxs = np.random.choice(range(0, trim_trace_llhs.shape[0]), size=self.n_ensemble, replace=False)
-		posterior_samples = trim_trace_x[choice_idxs, :]
-		posterior_llhs = trim_trace_llhs[choice_idxs]
-		posterior_priors = trim_trace_priors[choice_idxs]
-		return burn_in_idx, posterior_samples, posterior_llhs, posterior_priors
+		#trim_trace_x = samples.trace_x[ch_idx, burn_in_idx:, :]
+		#trim_trace_llhs = -1*samples.trace_neglogpost[ch_idx, burn_in_idx:]
+		#trim_trace_priors = samples.trace_neglogprior[ch_idx, burn_in_idx:]
+		#choice_idxs = np.random.choice(range(0, trim_trace_llhs.shape[0]), size=self.n_ensemble, replace=False)
+		#posterior_samples = trim_trace_x[choice_idxs, :]
+		#posterior_llhs = trim_trace_llhs[choice_idxs]
+		#posterior_priors = trim_trace_priors[choice_idxs]
+		return burn_in_idx #, posterior_samples, posterior_llhs, posterior_priors
 
 
 	def process_results(self):
 		sampler = self.sampler
 		algo_specific_info = {}
 		algo_specific_info["betas"] = sampler.betas
-		bi_idx, post_samples, post_llhs, post_pris = self.create_posterior_ensemble()
+		bi_idx = self.create_posterior_ensemble()
 		algo_specific_info["burn_in_idx"] = bi_idx
 
 		all_results = {}
@@ -94,10 +94,10 @@ class pestoSampler(BayesianInference):
 		all_results["all_llhs"] = all_llhs
 		all_results["all_priors"] = all_priors
 
-		all_results["posterior_samples"] = post_samples
-		all_results["posterior_weights"] = np.array([1/len(post_llhs) for x in post_llhs])
-		all_results["posterior_llhs"] = post_llhs
-		all_results["posterior_priors"] = post_pris
+		#all_results["posterior_samples"] = post_samples
+		#all_results["posterior_weights"] = np.array([1/len(post_llhs) for x in post_llhs])
+		#all_results["posterior_llhs"] = post_llhs
+		#all_results["posterior_priors"] = post_pris
 
 		n_fun_calls = self.model_problem.n_fun_calls
 		all_results["n_fun_calls"] = n_fun_calls
