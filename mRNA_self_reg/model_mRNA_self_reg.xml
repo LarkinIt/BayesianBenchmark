@@ -19,12 +19,12 @@
     </listOfSpecies>
     <listOfParameters>
       <!-- Independent variables -->
+      <parameter id="log_param0" value="1"/>
       <parameter id="log_param1" value="-0.30103"/>
       <parameter id="log_param2" value="1"/>
       <parameter id="log_param3" value="0.30103"/>
-      <parameter id="log_param4" value="0"/>
       <parameter id="dummy" value="0"/>
-      <parameter id="log_param5" value="1"/>
+      <parameter id="log_param4" value="0"/>
       <!-- Dependent variables -->
       <parameter id="_rateLaw3" constant="true"/>
       <parameter id="_rateLaw4" constant="true"/>
@@ -56,7 +56,7 @@
           <apply>
             <power/>
             <cn> 10 </cn>
-            <ci> log_param5 </ci>
+            <ci> log_param0 </ci>
           </apply>
         </math>
       </initialAssignment>
