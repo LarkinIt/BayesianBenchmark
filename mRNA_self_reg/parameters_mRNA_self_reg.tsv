@@ -4,4 +4,4 @@ log_param1	lin	-3	1	-0.3010299956639812	1
 log_param2	lin	-3	1.69897	1	1
 log_param3	lin	-3	1	0.3010299956639812	1
 dummy	lin	-3	3	0	1
-log_param4	lin	-1  1	0	0
+log_param4	lin	-1	1	0	0
