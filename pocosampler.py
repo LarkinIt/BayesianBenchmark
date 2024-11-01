@@ -86,6 +86,7 @@ class pocoSampler(BayesianInference):
         
         all_results["n_fun_calls"] = sampler.calls
         all_results["algo_specific_info"] = algo_specific_info
+        all_results["converged"] = True
         return all_results
             
     def run(self):

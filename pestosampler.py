@@ -43,9 +43,20 @@ class pestoSampler(BayesianInference):
 		
 		self.sampler = sampler
 
+	# Courtesy of ChatGPT
+	def largest_step_size(self, L, N):
+		# Start from the largest possible step size (L-1) and work backwards
+		for i in range((L - 1) // (N - 1), 0, -1):
+			# Check if this step size allows exactly N samples within the bounds of L
+			if (N - 1) * i < L:
+				return i
+		return None  # Return None if no valid step size is found
+
+
 	def create_posterior_ensemble(self):
 		sampler = self.sampler
 		samples = sampler.get_samples()
+		n_iter = self.n_iter
 
 		# get the lowest temperature chain index
 		# Note: remember that beta is the inverse of the temperature so 
@@ -53,25 +64,41 @@ class pestoSampler(BayesianInference):
 		ch_idx = np.argmax(samples.betas)
 		chain = np.array(samples.trace_x[ch_idx, :, :])
 		burn_in_idx = burn_in_by_sequential_geweke(chain)
+		diff = (n_iter - burn_in_idx)
+		converged = True
+		if diff < self.n_ensemble:
+			converged = False
 
-		#trim_trace_x = samples.trace_x[ch_idx, burn_in_idx:, :]
-		#trim_trace_llhs = -1*samples.trace_neglogpost[ch_idx, burn_in_idx:]
-		#trim_trace_priors = samples.trace_neglogprior[ch_idx, burn_in_idx:]
-		#choice_idxs = np.random.choice(range(0, trim_trace_llhs.shape[0]), size=self.n_ensemble, replace=False)
-		#posterior_samples = trim_trace_x[choice_idxs, :]
-		#posterior_llhs = trim_trace_llhs[choice_idxs]
-		#posterior_priors = trim_trace_priors[choice_idxs]
-		return burn_in_idx #, posterior_samples, posterior_llhs, posterior_priors
+			# make empty lists to avert downstream errors
+			posterior_samples = np.empty(self.n_ensemble, self.model_problem.n_dim)
+			posterior_llhs = np.empty(self.n_ensemble)
+			posterior_priors = np.empty(self.n_ensemble)
+		else:
+			step_size = self.largest_step_size(diff, self.n_ensemble)
+			
+			trim_trace_x = samples.trace_x[ch_idx, burn_in_idx:, :]
+			trim_trace_llhs = -1*samples.trace_neglogpost[ch_idx, burn_in_idx:]
+			trim_trace_priors = samples.trace_neglogprior[ch_idx, burn_in_idx:]
+
+			posterior_samples = trim_trace_x[::step_size, :][:self.n_ensemble, :]
+			posterior_llhs = trim_trace_llhs[::step_size][:self.n_ensemble]
+			posterior_priors = trim_trace_priors[::step_size][:self.n_ensemble]
+		
+		all_results = {}
+		all_results["converged"] = converged
+		all_results["posterior_samples"] = posterior_samples
+		all_results["posterior_llhs"] = posterior_llhs
+		all_results["posterior_priors"] = posterior_priors
+		return burn_in_idx, all_results
 
 
 	def process_results(self):
 		sampler = self.sampler
 		algo_specific_info = {}
 		algo_specific_info["betas"] = sampler.betas
-		bi_idx = self.create_posterior_ensemble()
+		bi_idx, all_results = self.create_posterior_ensemble()
 		algo_specific_info["burn_in_idx"] = bi_idx
 
-		all_results = {}
 		all_results["seed"] = self.seed
 		all_results["n_ensemble"] = self.n_ensemble
 		all_results["method"] = self.method
@@ -94,10 +121,7 @@ class pestoSampler(BayesianInference):
 		all_results["all_llhs"] = all_llhs
 		all_results["all_priors"] = all_priors
 
-		#all_results["posterior_samples"] = post_samples
-		#all_results["posterior_weights"] = np.array([1/len(post_llhs) for x in post_llhs])
-		#all_results["posterior_llhs"] = post_llhs
-		#all_results["posterior_priors"] = post_pris
+		all_results["posterior_weights"] = np.array([1/self.n_ensemble for x in range(self.n_ensemble)])
 
 		n_fun_calls = self.model_problem.n_fun_calls
 		all_results["n_fun_calls"] = n_fun_calls
