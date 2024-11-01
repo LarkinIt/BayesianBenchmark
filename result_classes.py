@@ -2,24 +2,60 @@ import itertools
 import numpy as np
 from scipy.stats import distributions
 
+
+# Courtesy of ChatGPT
+def largest_step_size(L, N):
+    # Start from the largest possible step size (L-1) and work backwards
+    for i in range((L - 1) // (N - 1), 0, -1):
+        # Check if this step size allows exactly N samples within the bounds of L
+        if (N - 1) * i < L:
+            return i
+    return None  # Return None if no valid step size is found
+
 class Result:
 	def __init__(self, result_dict) -> None:
 		for key in result_dict:
 			setattr(self, key, result_dict[key])
-		#if self.method == "ptmcmc":
-			#burn_in_idx = self.algo_specific_info["burn_in_idx"]
-			#n_chains = self.n_chains
-			#print(f"{burn_in_idx}, \t{n_chains}")
-			#self.n_fun_calls = (burn_in_idx+1)*n_chains
+		self.converged = True
+		
+		if self.method == "ptmcmc":
+			all_samples = self.all_samples
+			burn_in_idx = self.algo_specific_info["burn_in_idx"]
+			n_iter = self.n_iter
+			if (n_iter - burn_in_idx) < self.n_ensemble:
+				self.converged = False
+			else:
+				betas = self.algo_specific_info["betas"]
+				ch_idx = np.argmax(betas)
+				diff = (n_iter - burn_in_idx)
+
+				step_size = largest_step_size(diff, self.n_ensemble)
+				#print(f"{diff}, {step_size}")
+				
+				chain = all_samples[:, ch_idx, :]
+				llhs = self.all_llhs[:, ch_idx]
+				priors = self.all_priors[:, ch_idx]
+				#print(chain.shape)
+				trim_chain = chain[burn_in_idx:, :]
+				#print(self.all_llhs.shape)
+				trim_llhs = llhs[burn_in_idx:]
+				trim_priors = priors[burn_in_idx:]
+
+				self.posterior_samples = trim_chain[::step_size, :][:self.n_ensemble, :]
+				self.posterior_llhs = trim_llhs[::step_size][:self.n_ensemble]
+				self.posterior_priors = trim_priors[::step_size][:self.n_ensemble]
+				# Note: set the weights
+				self.posterior_weights = np.array([1/self.n_ensemble for i in range(self.n_ensemble)])
+				#print(self.posterior_llhs.shape, self.posterior_weights.shape)			
+							
 
 	def get_sampling_ratio(self, par_bounds, par_idx=0) -> float:
 		"""
 		Measures the ratio of the sampling space 
 		explored for a given parameter index
 		"""
-		bound_diff = 10**par_bounds[par_idx][1] - 10**par_bounds[par_idx][0]
+		bound_diff = par_bounds[par_idx][1] - par_bounds[par_idx][0]
 		par_samples = self.all_samples[:, :, par_idx]
-		par_samples = 10**par_samples
 		max_val = np.max(par_samples)
 		min_val = np.min(par_samples)
 		sample_diff = max_val - min_val
@@ -64,6 +100,10 @@ class MethodResults:
 		all_llhs = [x.posterior_llhs for x in self.all_runs]
 		return np.array(all_llhs)
 	
+	def get_avg_llhs(self) -> np.array:
+		avgs = [np.average(x.posterior_llhs, weights=x.posterior_weights) for x in self.all_runs]
+		return np.array(avgs)
+
 	def get_sampling_efficiency(self, bounds, par_idx) -> np.array:
 		all_ratios = [x.get_sampling_ratio(bounds, par_idx) for x in self.all_runs]
 		return np.array(all_ratios)
