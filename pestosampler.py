@@ -124,24 +124,11 @@ class pestoSampler(BayesianInference):
 		all_results["all_llhs"] = all_llhs[::sample_step, :]
 		all_results["all_priors"] = all_priors[::sample_step, :]
 
-		#all_results["posterior_weights"] = np.array([1/self.n_ensemble for x in range(self.n_ensemble)])
-
 		n_fun_calls = self.model_problem.n_fun_calls
 		all_results["n_fun_calls"] = n_fun_calls
 		all_results["algo_specific_info"] = algo_specific_info
-		from objsize import get_deep_size
-		for key in all_results.keys():
-			val = all_results[key]
-			s = get_deep_size(val)
-			print(f"{key}:{type(val)}\t{s}")
-			if isinstance(val, np.ndarray):
-				print(f"\t\tdtype:", val.dtype, "BYTES: ", val.nbytes)
-			if isinstance(val, dict):
-				for keydos in val.keys():
-					c = get_deep_size(val[keydos])
-					print(f"\t\t {keydos}:\t{c}") 
-		print(all_samples.shape, all_llhs.shape)
 		return all_results
+			
 			
 	def run(self):
 		sampler = self.sampler

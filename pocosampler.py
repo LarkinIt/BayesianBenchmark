@@ -87,19 +87,8 @@ class pocoSampler(BayesianInference):
 		all_results["n_fun_calls"] = sampler.calls
 		all_results["algo_specific_info"] = algo_specific_info
 		all_results["converged"] = True
-		from objsize import get_deep_size
-		for key in all_results.keys():
-			val = all_results[key]
-			s = get_deep_size(val)
-			print(f"{key}:{type(val)}\t{s}")
-			if isinstance(val, np.ndarray):
-				print(f"\t\tdtype:", val.dtype, "BYTES: ", val.nbytes)
-			if isinstance(val, dict):
-				for keydos in val.keys():
-					c = get_deep_size(val[keydos])
-					print(f"\t\t {keydos}:\t{c}")
-		print(poco_results["x"].shape, poco_results["logl"].shape)
 		return all_results
+
 			
 	def run(self):
 		self.sampler.run(progress=True)
