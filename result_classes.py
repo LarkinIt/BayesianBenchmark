@@ -20,12 +20,13 @@ class Result:
 		return sample_diff/bound_diff
 	
 	def get_convergence(self, llh_threshold):
-		idxs = np.where(self.all_llhs > llh_threshold)
-		first_iter = np.min(idxs[0])
+		try:
+			idxs = np.where(self.all_llhs > llh_threshold)
+			first_iter = np.min(idxs[0])
+		except ValueError:
+			first_iter = self.n_iter-1
 
 		if self.method == "ptmcmc":
-			#print(self.all_llhs.shape, self.all_llhs[5:,0], idxs)
-			# ! TO DO: replace this with a more exact calculation
 			#print(first_iter)
 			conv_calls = first_iter * self.n_chains
 		else:

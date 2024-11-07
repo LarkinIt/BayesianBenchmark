@@ -70,7 +70,7 @@ class pestoSampler(BayesianInference):
 			converged = False
 
 			# make empty lists to avert downstream errors
-			posterior_samples = np.empty(self.n_ensemble, self.model_problem.n_dim)
+			posterior_samples = np.empty((self.n_ensemble, self.model_problem.n_dim))
 			posterior_llhs = np.empty(self.n_ensemble)
 			posterior_priors = np.empty(self.n_ensemble)
 		else:
@@ -88,7 +88,7 @@ class pestoSampler(BayesianInference):
 		all_results["converged"] = converged
 		all_results["posterior_samples"] = posterior_samples
 		all_results["posterior_llhs"] = posterior_llhs
-		all_results["posterior_priors"] = posterior_priors
+		all_results["posterior_priors"] = np.array(posterior_priors, dtype=float)
 		return burn_in_idx, all_results
 
 
@@ -105,27 +105,42 @@ class pestoSampler(BayesianInference):
 		all_results["problem"] = self.model_problem.model_name
 
 		all_results["n_iter"] = self.n_iter+1
-		all_results["iters"] = np.array(range(self.n_iter+1))
+		#all_results["iters"] = np.array(range(self.n_iter+1), dtype=float)
 		all_results["n_chains"] = self.n_chains
 		
 		all_samples = np.array([x.trace_x for x in sampler.samplers])
 		all_samples = np.swapaxes(all_samples, 0, 1)
-		all_weights = np.ones(shape=all_samples.shape[:-1])
+		#all_weights = np.ones(shape=all_samples.shape[:-1])
 		all_llhs = -1*np.array([x.trace_neglogpost for x in sampler.samplers])
 		all_llhs = np.swapaxes(all_llhs, 0, 1)
-		all_priors = np.array([x.trace_neglogprior for x in sampler.samplers])
+		all_priors = np.array([x.trace_neglogprior for x in sampler.samplers], dtype=float)
 		all_priors = np.swapaxes(all_priors, 0, 1)
 		
-		all_results["all_samples"] = all_samples
-		all_results["all_weights"] = all_weights
-		all_results["all_llhs"] = all_llhs
-		all_results["all_priors"] = all_priors
+		# downsample all traces for storage
+		sample_step = 100
+		all_results["sample_step"] = sample_step
+		all_results["all_samples"] = all_samples[::sample_step, :, :]
+		#all_results["all_weights"] = all_weights
+		all_results["all_llhs"] = all_llhs[::sample_step, :]
+		all_results["all_priors"] = all_priors[::sample_step, :]
 
-		all_results["posterior_weights"] = np.array([1/self.n_ensemble for x in range(self.n_ensemble)])
+		#all_results["posterior_weights"] = np.array([1/self.n_ensemble for x in range(self.n_ensemble)])
 
 		n_fun_calls = self.model_problem.n_fun_calls
 		all_results["n_fun_calls"] = n_fun_calls
 		all_results["algo_specific_info"] = algo_specific_info
+		from objsize import get_deep_size
+		for key in all_results.keys():
+			val = all_results[key]
+			s = get_deep_size(val)
+			print(f"{key}:{type(val)}\t{s}")
+			if isinstance(val, np.ndarray):
+				print(f"\t\tdtype:", val.dtype, "BYTES: ", val.nbytes)
+			if isinstance(val, dict):
+				for keydos in val.keys():
+					c = get_deep_size(val[keydos])
+					print(f"\t\t {keydos}:\t{c}") 
+		print(all_samples.shape, all_llhs.shape)
 		return all_results
 			
 	def run(self):

@@ -8,7 +8,7 @@ from modelproblem import ModelProblem
 from result_classes import Result,MethodResults
 from tqdm import tqdm
 
-prob_name = "linear_mRNA_self_reg"
+prob_name = "Calcium_Oscillate"
 methods = ["smc", "pmc", "ptmcmc"]
 
 mod_prob = ModelProblem(prob_name)
@@ -48,6 +48,6 @@ for i, name in tqdm(enumerate(fit_par_names)):
                 ks_df.loc[len(ks_df)] = new_row
 
 ks_df = ks_df.drop(ks_df[ks_df["KS"] == 0].index)
-
+ks_df.to_csv(f"{prob_name}_ks_data.csv")
 sns.violinplot(data=ks_df, x="Param", y="KS", hue="Method")
 plt.savefig("ks_test.png")

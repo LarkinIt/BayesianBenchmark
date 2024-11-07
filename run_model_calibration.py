@@ -9,7 +9,7 @@ from pestosampler import pestoSampler
 
 os.environ["OMP_NUM_THREADS"] = "1"
 
-@profile
+#@profile
 def run_model_calibration(args):
     print(args)
     seed = args.seed
@@ -50,9 +50,35 @@ def run_model_calibration(args):
     sampler.initialize()
     results = sampler.run()
 
-    results_fname = f"{output_dir}/{problem}_{method}_{seed}seed.pkl"
-    with open(results_fname, "wb") as f:
-        pickle.dump(results, f, protocol=pickle.HIGHEST_PROTOCOL)
+    from sys import getsizeof
+    import objsize
+    print(f"SIZE OF RESULTS: {objsize.get_deep_size(results)}")
+
+    #import h5py
+    results_fname = f"{output_dir}/{problem}_{method}_{seed}seed_down.pkl"
+    import gc
+    import gzip
+    #import json
+    #import hdfdict
+    #import hickle as hkl
+    gc.disable()
+    try:
+        gc.collect()
+        with gzip.open(results_fname, "w") as fp:
+            pickle.dump(results, fp, protocol=pickle.HIGHEST_PROTOCOL)
+            #hdfdict.dump(results, fp)
+        #with open(results_fname, "w") as fp:
+        #    print(pickle.HIGHEST_PROTOCOL)
+        #hkl.dump(results, results_fname, mode="w", compression="gzip")
+    finally:
+        gc.enable()
+    #hdfdict.dump(results, results_fname)
+    #np.savez(results_fname, results)
+    #hf = h5py.File(results_fname, 'w')
+    #with open(results_fname, "wb") as f:
+    #    pickle.dump(results, f, protocol=pickle.HIGHEST_PROTOCOL)
+    #hf.create_dataset("results", results)
+    #hf.close()
     print(f"Results saved to {results_fname}")
 
 if __name__ == "__main__":
