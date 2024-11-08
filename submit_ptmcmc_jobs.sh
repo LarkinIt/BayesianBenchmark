@@ -1,6 +1,6 @@
 #!/bin/bash
 
-seeds=({0..99..1})
+seeds=(19 20 23 37)
 declare -a probs=("Calcium_Oscillate")
 declare -a methods=("ptmcmc")
 n_ensemble=1000
