@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -N 1
-#SBATCH -p any_cpu
+#SBATCH -p big_memory
 #SBATCH --cpus-per-task=16
 #SBATCH --mail-type=END
 #SBATCH --mail-user=caroline.larkin@pitt.edu
