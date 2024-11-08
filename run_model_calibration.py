@@ -52,7 +52,7 @@ def run_model_calibration(args):
     sampler.initialize()
     results = sampler.run()
 
-    results_fname = f"{output_dir}/{problem}_{method}_{seed}seed_down.pkl"
+    results_fname = f"{output_dir}/{problem}_{method}_{seed}seed.pkl"
 
     gc.disable()
     try:

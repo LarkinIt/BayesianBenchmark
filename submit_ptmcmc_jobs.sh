@@ -1,10 +1,10 @@
 #!/bin/bash
 
-seeds=(19 20 23 37)
+seeds=({0..99..1})
 declare -a probs=("Calcium_Oscillate")
 declare -a methods=("ptmcmc")
 n_ensemble=1000
-n_iter=1548500
+n_iter=1418000
 ##### Declare anything else needed to pass as an arg below
 
 for prob in "${probs[@]}"; do
