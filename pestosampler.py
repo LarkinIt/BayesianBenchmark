@@ -117,12 +117,12 @@ class pestoSampler(BayesianInference):
 		all_priors = np.swapaxes(all_priors, 0, 1)
 		
 		# downsample all traces for storage
-		sample_step = 100
-		all_results["sample_step"] = sample_step
-		all_results["all_samples"] = all_samples[::sample_step, :, :]
+		downsample_step = 100
+		all_results["sample_step"] = downsample_step
+		all_results["all_samples"] = all_samples[::downsample_step, :, :]
 		#all_results["all_weights"] = all_weights
-		all_results["all_llhs"] = all_llhs[::sample_step, :]
-		all_results["all_priors"] = all_priors[::sample_step, :]
+		all_results["all_llhs"] = all_llhs[::downsample_step, :]
+		all_results["all_priors"] = all_priors[::downsample_step, :]
 
 		n_fun_calls = self.model_problem.n_fun_calls
 		all_results["n_fun_calls"] = n_fun_calls
