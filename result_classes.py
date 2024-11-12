@@ -5,7 +5,14 @@ from scipy.stats import distributions
 class Result:
 	def __init__(self, result_dict) -> None:
 		for key in result_dict:
-			setattr(self, key, result_dict[key])		
+			setattr(self, key, result_dict[key])
+		if self.method != "ptmcmc":
+			self.converged = True
+
+		if not("posterior_weights" in result_dict.keys()):
+			n = len(result_dict["posterior_llhs"])
+			self.posterior_weights = np.array([1.0/n]*n)
+			
 
 	def get_sampling_ratio(self, par_bounds, par_idx=0) -> float:
 		"""
@@ -20,17 +27,19 @@ class Result:
 		return sample_diff/bound_diff
 	
 	def get_convergence(self, llh_threshold):
-		try:
-			idxs = np.where(self.all_llhs > llh_threshold)
-			first_iter = np.min(idxs[0])
-		except ValueError:
-			first_iter = self.n_iter-1
+		conv_calls = np.nan
+		if self.converged:
+			try:
+				idxs = np.where(self.all_llhs > llh_threshold)
+				first_iter = np.min(idxs[0])
+			except ValueError:
+				first_iter = self.n_iter-1
 
-		if self.method == "ptmcmc":
-			#print(first_iter)
-			conv_calls = first_iter * self.n_chains
-		else:
-			conv_calls = self.algo_specific_info["calls_by_iter"][first_iter]
+			if self.method == "ptmcmc":
+				#print(first_iter)
+				conv_calls = (first_iter+1) * self.n_chains
+			else:
+				conv_calls = self.algo_specific_info["calls_by_iter"][first_iter]
 		return conv_calls
 
 
@@ -52,19 +61,19 @@ class MethodResults:
 		self.all_runs.append(result_obj)
 
 	def get_fun_calls(self) -> np.array:
-		all_calls = [x.n_fun_calls for x in self.all_runs]
+		all_calls = [x.n_fun_calls if x.converged else np.nan for x in self.all_runs]
 		return np.array(all_calls)
 	
 	def get_llhs(self) -> np.array:
-		all_llhs = [x.posterior_llhs for x in self.all_runs]
+		all_llhs = [x.posterior_llhs if x.converged else [-1*np.inf]*x.n_ensemble for x in self.all_runs]
 		return np.array(all_llhs)
 	
 	def get_avg_llhs(self) -> np.array:
-		avgs = [np.average(x.posterior_llhs, weights=x.posterior_weights) for x in self.all_runs]
+		avgs = [np.average(x.posterior_llhs, weights=x.posterior_weights) if x.converged else -1*np.inf for x in self.all_runs]
 		return np.array(avgs)
 
 	def get_sampling_efficiency(self, bounds, par_idx) -> np.array:
-		all_ratios = [x.get_sampling_ratio(bounds, par_idx) for x in self.all_runs]
+		all_ratios = [x.get_sampling_ratio(bounds, par_idx) if x.converged else np.nan for x in self.all_runs]
 		return np.array(all_ratios)
 	
 	def get_convergence_times(self, llh_threshold):
