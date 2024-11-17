@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by BioNetGen 2.9.2  -->
+<sbml xmlns="http://www.sbml.org/sbml/level2/version3" level="2" version="3">
+  <model id="nfkb">
+    <listOfUnitDefinitions>
+      <unitDefinition id="substance" name="substance">
+        <listOfUnits>
+          <unit kind="item" exponent="1" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment id="cell" size="1"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="S1" compartment="cell" initialAmount="0" name="TNF()"/>
+      <species id="S2" compartment="cell" initialAmount="335.58304" name="TNFR(st~i)"/>
+      <species id="S3" compartment="cell" initialAmount="0" name="TNFR(st~a)"/>
+      <species id="S4" compartment="cell" initialAmount="55641.65" name="IKK(s~I)"/>
+      <species id="S5" compartment="cell" initialAmount="0" name="IKK(s~A)"/>
+      <species id="S6" compartment="cell" initialAmount="0" name="NFkB(IkB,loc~c)"/>
+      <species id="S7" compartment="cell" initialAmount="0" name="NFkB(IkB,loc~n)"/>
+      <species id="S8" compartment="cell" initialAmount="0" name="IkB(NFkB,loc~c)"/>
+      <species id="S9" compartment="cell" initialAmount="0" name="IkB(NFkB,loc~n)"/>
+      <species id="S10" compartment="cell" initialAmount="3585915.1" name="IkB(NFkB!1,loc~c).NFkB(IkB!1,loc~c)"/>
+      <species id="S11" compartment="cell" initialAmount="0" name="IkB(NFkB!1,loc~n).NFkB(IkB!1,loc~n)"/>
+      <species id="S12" compartment="cell" initialAmount="0" name="A20()"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <!-- Independent variables -->
+      <parameter id="k_b" value="0.0352"/>
+      <parameter id="k_f" value="-3.0688"/>
+      <parameter id="k_a" value="-4.5164"/>
+      <parameter id="k_4" value="-7.4173"/>
+      <parameter id="k_i1" value="-2.057"/>
+      <parameter id="k_e1" value="-5.9334"/>
+      <parameter id="k_t2a" value="-8"/>
+      <parameter id="k_t1a" value="-7.3178"/>
+      <parameter id="k_i2" value="-4.1089"/>
+      <parameter id="k_e2" value="-10.6289"/>
+      <parameter id="k_e2a" value="-3.5859"/>
+      <parameter id="c_4a" value="-4.6363"/>
+      <parameter id="c_5a" value="-4.6"/>
+      <parameter id="c_1a" value="-3.2082"/>
+      <parameter id="k_a1a" value="-7"/>
+      <parameter id="k_d1a" value="-8"/>
+      <parameter id="c_3" value="-20"/>
+      <parameter id="c_1" value="-20"/>
+      <parameter id="k_ikk" value="-20"/>
+      <parameter id="k_tnfr" value="-20"/>
+      <parameter id="TNFRin" value="2.5258"/>
+      <parameter id="IKKin" value="4.7454"/>
+      <parameter id="boundc" value="6.5546"/>
+      <!-- Dependent variables -->
+      <parameter id="_rateLaw1" constant="true"/>
+      <parameter id="_rateLaw2" constant="true"/>
+      <parameter id="_rateLaw3" constant="true"/>
+      <parameter id="_rateLaw4" constant="true"/>
+      <parameter id="_rateLaw5" constant="true"/>
+      <parameter id="_rateLaw6" constant="true"/>
+      <parameter id="_rateLaw7" constant="true"/>
+      <parameter id="_rateLaw8" constant="true"/>
+      <parameter id="_rateLaw9" constant="true"/>
+      <parameter id="_rateLaw10" constant="true"/>
+      <parameter id="_rateLaw11" constant="true"/>
+      <parameter id="_rateLaw12" constant="true"/>
+      <parameter id="_rateLaw13" constant="true"/>
+      <parameter id="_rateLaw14" constant="true"/>
+      <parameter id="_rateLaw15" constant="true"/>
+      <parameter id="_rateLaw16" constant="true"/>
+      <parameter id="_rateLaw17" constant="true"/>
+      <parameter id="_rateLaw18" constant="true"/>
+      <parameter id="_rateLaw19" constant="true"/>
+      <parameter id="_rateLaw20" constant="true"/>
+      <parameter id="_rateLaw21" constant="true"/>
+      <parameter id="_rateLaw22" constant="true"/>
+      <!-- Observables -->
+      <parameter id="TNF" constant="false"/>
+      <parameter id="TNFRi" constant="false"/>
+      <parameter id="TNFRa" constant="false"/>
+      <parameter id="IKKi" constant="false"/>
+      <parameter id="IKKa" constant="false"/>
+      <parameter id="cNFkB" constant="false"/>
+      <parameter id="nNFkB" constant="false"/>
+      <parameter id="cIkB" constant="false"/>
+      <parameter id="nIkB" constant="false"/>
+      <parameter id="cNFkB_IkB" constant="false"/>
+      <parameter id="nNFkB_IkB" constant="false"/>
+      <parameter id="A20" constant="false"/>
+    </listOfParameters>
+    <listOfInitialAssignments>
+      <!-- All initial values -->
+      <initialAssignment symbol="S2">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> TNFRin </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="S4">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> IKKin </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="S10">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> boundc </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <!-- Dependent variables -->
+      <initialAssignment symbol="_rateLaw1">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_b </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw2">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_f </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw3">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw4">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_4 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw5">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_a1a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw6">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_d1a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw7">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <cn> 3.3 </cn>
+            <apply>
+              <power/>
+              <cn> 10 </cn>
+              <ci> k_a1a </ci>
+            </apply>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw8">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_d1a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw9">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_t1a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw10">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_t2a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw11">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> c_4a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw12">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> c_5a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw13">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_i1 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw14">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_e1 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw15">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_i2 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw16">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_e2 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw17">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> c_1a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw18">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_e2a </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw19">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> c_1 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw20">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_ikk </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw21">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> k_tnfr </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="_rateLaw22">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <power/>
+            <cn> 10 </cn>
+            <ci> c_3 </ci>
+          </apply>
+        </math>
+      </initialAssignment>
+    </listOfInitialAssignments>
+    <listOfRules>
+      <!-- Observables -->
+      <assignmentRule variable="TNF">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S1 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="TNFRi">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S2 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="TNFRa">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S3 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="IKKi">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S4 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="IKKa">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S5 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="cNFkB">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S6 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="nNFkB">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S7 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="cIkB">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S8 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="nIkB">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S9 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="cNFkB_IkB">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S10 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="nNFkB_IkB">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S11 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+      <assignmentRule variable="A20">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <plus/>
+              <cn> 0 </cn>
+              <ci> S12 </ci>
+            </apply>
+          </math>
+      </assignmentRule>
+    </listOfRules>
+    <listOfReactions>
+      <reaction id="R1" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S1"/>
+          <speciesReference species="S2"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S1"/>
+          <speciesReference species="S3"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw1 </ci>
+              <ci> S1 </ci>
+              <ci> S2 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R2" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S3"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S2"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw2 </ci>
+              <ci> S3 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R3" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S3"/>
+          <speciesReference species="S4"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S3"/>
+          <speciesReference species="S5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw3 </ci>
+              <ci> S3 </ci>
+              <ci> S4 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R4" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S5"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S4"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw4 </ci>
+              <ci> S5 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R5" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S6"/>
+          <speciesReference species="S8"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S10"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw5 </ci>
+              <ci> S6 </ci>
+              <ci> S8 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R6" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S10"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S6"/>
+          <speciesReference species="S8"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw6 </ci>
+              <ci> S10 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R7" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S7"/>
+          <speciesReference species="S9"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S11"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw7 </ci>
+              <ci> S7 </ci>
+              <ci> S9 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R8" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S11"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S7"/>
+          <speciesReference species="S9"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw8 </ci>
+              <ci> S11 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R9" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S5"/>
+          <speciesReference species="S8"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S5"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw9 </ci>
+              <ci> S5 </ci>
+              <ci> S8 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R10" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S5"/>
+          <speciesReference species="S10"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S5"/>
+          <speciesReference species="S6"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw10 </ci>
+              <ci> S5 </ci>
+              <ci> S10 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R11" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S8"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw11 </ci>
+              <ci> S8 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R12" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S10"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S6"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw12 </ci>
+              <ci> S10 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R13" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S6"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S7"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw13 </ci>
+              <ci> S6 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R14" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S7"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S6"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw14 </ci>
+              <ci> S7 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R15" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S8"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S9"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw15 </ci>
+              <ci> S8 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R16" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S9"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S8"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw16 </ci>
+              <ci> S9 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R17" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S7"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S7"/>
+          <speciesReference species="S8"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw17 </ci>
+              <ci> S7 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R18" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S11"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S10"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw18 </ci>
+              <ci> S11 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R19" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S7"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S7"/>
+          <speciesReference species="S12"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw19 </ci>
+              <ci> S7 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R20" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S5"/>
+          <speciesReference species="S12"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S4"/>
+          <speciesReference species="S12"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw20 </ci>
+              <ci> S5 </ci>
+              <ci> S12 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R21" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S3"/>
+          <speciesReference species="S12"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="S2"/>
+          <speciesReference species="S12"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw21 </ci>
+              <ci> S3 </ci>
+              <ci> S12 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="R22" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S12"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> _rateLaw22 </ci>
+              <ci> S12 </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>
