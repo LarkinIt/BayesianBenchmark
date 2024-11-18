@@ -2,15 +2,12 @@ format_version: 1
 parameter_file: parameters_NFkB.tsv
 problems:
   - condition_files:
-    - experimental_conditions_NFkB.tsv
+    - experimentalCondition_NFkB.tsv
     measurement_files:
-    - measurement_data_NFkB.tsv
+    - measurementData_NFkB.tsv
     observable_files:
     - observables_NFkB.tsv
     sbml_files:
     - model_NFkB.xml
     visualization_files:
-    - visualization_specifications_NFkB.tsv
-
-    
-
+    - visualizationSpecification_NFkB.tsv 
