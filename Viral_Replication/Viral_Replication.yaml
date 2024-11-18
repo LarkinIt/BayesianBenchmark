@@ -1,0 +1,13 @@
+format_version: 1
+parameter_file: parameters_Viral_Replication.tsv
+problems:
+- condition_files:
+  - experimentalCondition_Viral_Replication.tsv
+  measurement_files:
+  - measurementData_Viral_Replication.tsv
+  observable_files:
+  - observables_Viral_Replication.tsv
+  sbml_files:
+  - model_Viral_Replication.xml
+  visualization_files:
+  - visualizationSpecification_Viral_Replication.tsv

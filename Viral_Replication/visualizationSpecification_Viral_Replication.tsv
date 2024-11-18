@@ -1,0 +1,6 @@
+plotId	plotTypeSimulation	plotTypeData	xValues	xLabel	yValues	yLabel	yScale
+plot1	LinePlot	MeanAndSD	time	Time	nsp_rlu	Protein RLU	log10
+plot1	LinePlot	MeanAndSD	time	Time	sp_rlu	Protein RLU	log10
+plot2	LinePlot	MeanAndSD	time	Time	posRNA_obs	Copy Number	log10
+plot2	LinePlot	MeanAndSD	time	Time	sgRNA_obs	Copy Number	log10
+plot3	LinePlot	MeanAndSD	time	Time	PFU_obs	Particles	log10
