@@ -1,2 +1,0 @@
-observableId	observableName	observableFormula	noiseFormula
-nNFkB_obs	NFkB(IkB,loc~n)	NFkB_IkB_loc_n	0.01*NFkB_IkB_loc_n
