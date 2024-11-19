@@ -11,4 +11,3 @@ problems:
   - model_EGFR.xml
   visualization_files:
   - visualizationSpecification_EGFR.tsv
-
