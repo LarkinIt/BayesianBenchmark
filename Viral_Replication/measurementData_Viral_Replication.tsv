@@ -1,46 +1,46 @@
-observableId	simulationConditionId	measurement	time	noiseParameters
-nsp_rlu	simCondition	1316.666667	1	134.2882472
-nsp_rlu	simCondition	2746.666667	2	1033.940682
-nsp_rlu	simCondition	4880	3	219.317122
-nsp_rlu	simCondition	11400	4	3911.214645
-nsp_rlu	simCondition	39150	5	3873.138262
-nsp_rlu	simCondition	88890	6	42415.7789
-nsp_rlu	simCondition	95805	7	13314.82069
-nsp_rlu	simCondition	245146.6667	9	73019.35109
-nsp_rlu	simCondition	426266.6667	13	31484.81115
-sp_rlu	simCondition	4363.333333	1	695.1498639
-sp_rlu	simCondition	4326.666667	2	1029.190621
-sp_rlu	simCondition	7953.333333	3	3206.030775
-sp_rlu	simCondition	884363.3333	4	515615.9084
-sp_rlu	simCondition	13786186.67	5	2616794.826
-sp_rlu	simCondition	14462796.67	6	2566736.977
-sp_rlu	simCondition	37504253.33	7	3937166.705
-sp_rlu	simCondition	51014173.33	9	3830604.802
-sp_rlu	simCondition	302167400	13	15812794.45
-posRNA_obs	simCondition	2.964	1	0.789906324
-posRNA_obs	simCondition	2.937333333	2	1.114244737
-posRNA_obs	simCondition	20.84	3	9.997119585
-posRNA_obs	simCondition	1817.333333	4	842.0197939
-posRNA_obs	simCondition	11440	5	672.9041537
-posRNA_obs	simCondition	14733.33333	6	6178.198227
-posRNA_obs	simCondition	5906.666667	7	1505.368172
-posRNA_obs	simCondition	30293.33333	9	3842.984951
-posRNA_obs	simCondition	59200	13	19062.00409
-sgRNA_obs	simCondition	6.573333333	1	0.858215202
-sgRNA_obs	simCondition	6.36	2	1.486472334
-sgRNA_obs	simCondition	54.48	3	33.82517406
-sgRNA_obs	simCondition	10320	4	4122.329439
-sgRNA_obs	simCondition	71200	5	2497.999199
-sgRNA_obs	simCondition	85733.33333	6	18479.53823
-sgRNA_obs	simCondition	53333.33333	7	12926.45865
-sgRNA_obs	simCondition	175200	9	17394.25192
-sgRNA_obs	simCondition	307066.6667	13	57441.91269
-PFU_obs	simCondition	0.075	1	0.035156792
-PFU_obs	simCondition	0.19	2	0.04
-PFU_obs	simCondition	0.116666667	3	0.02081666
-PFU_obs	simCondition	0.32	4	0.175214155
-PFU_obs	simCondition	62	5	18.68154169
-PFU_obs	simCondition	293.3333333	6	123.4233905
-PFU_obs	simCondition	400	7	80
-PFU_obs	simCondition	2100	9	700
-PFU_obs	simCondition	7900	13	1216.552506
+observableId	simulationConditionId	measurement	time
+nsp_rlu	simCondition	1316.666667	1
+nsp_rlu	simCondition	2746.666667	2
+nsp_rlu	simCondition	4880	3
+nsp_rlu	simCondition	11400	4
+nsp_rlu	simCondition	39150	5
+nsp_rlu	simCondition	88890	6
+nsp_rlu	simCondition	95805	7
+nsp_rlu	simCondition	245146.6667	9
+nsp_rlu	simCondition	426266.6667	13
+sp_rlu	simCondition	4363.333333	1
+sp_rlu	simCondition	4326.666667	2
+sp_rlu	simCondition	7953.333333	3
+sp_rlu	simCondition	884363.3333	4
+sp_rlu	simCondition	13786186.67	5
+sp_rlu	simCondition	14462796.67	6
+sp_rlu	simCondition	37504253.33	7
+sp_rlu	simCondition	51014173.33	9
+sp_rlu	simCondition	302167400	13
+posRNA_obs	simCondition	2.964	1
+posRNA_obs	simCondition	2.937333333	2
+posRNA_obs	simCondition	20.84	3
+posRNA_obs	simCondition	1817.333333	4
+posRNA_obs	simCondition	11440	5
+posRNA_obs	simCondition	14733.33333	6
+posRNA_obs	simCondition	5906.666667	7
+posRNA_obs	simCondition	30293.33333	9
+posRNA_obs	simCondition	59200	13
+sgRNA_obs	simCondition	6.573333333	1
+sgRNA_obs	simCondition	6.36	2
+sgRNA_obs	simCondition	54.48	3
+sgRNA_obs	simCondition	10320	4
+sgRNA_obs	simCondition	71200	5
+sgRNA_obs	simCondition	85733.33333	6
+sgRNA_obs	simCondition	53333.33333	7
+sgRNA_obs	simCondition	175200	9
+sgRNA_obs	simCondition	307066.6667	13
+PFU_obs	simCondition	0.075	1
+PFU_obs	simCondition	0.19	2
+PFU_obs	simCondition	0.116666667	3
+PFU_obs	simCondition	0.32	4
+PFU_obs	simCondition	62	5
+PFU_obs	simCondition	293.3333333	6
+PFU_obs	simCondition	400	7
+PFU_obs	simCondition	2100	9
+PFU_obs	simCondition	7900	13
