@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created by BioNetGen 2.7.1  -->
+<!-- Created by BioNetGen 2.9.2  -->
 <sbml xmlns="http://www.sbml.org/sbml/level2/version3" level="2" version="3">
   <model id="hopfBifurcation_model">
     <listOfUnitDefinitions>
@@ -29,6 +29,9 @@
       <parameter id="X2" constant="false"/>
       <parameter id="X3" constant="false"/>
     </listOfParameters>
+    <listOfInitialAssignments>
+      <!-- All initial values -->
+    </listOfInitialAssignments>
     <listOfRules>
       <!-- Observables -->
       <assignmentRule variable="X1">

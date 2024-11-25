@@ -1,0 +1,4 @@
+plotId	plotTypeData	xLabel	yValues	yLabel
+plot1	MeanAndSD	Time	X1_obs	X_{1}
+plot1	MeanAndSD	Time	X2_obs	X_{2}
+plot1	MeanAndSD	Time	X3_obs	X_{3}

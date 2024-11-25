@@ -1,4 +1,0 @@
-observableId	observableName	observableFormula	noiseFormula	noiseDistribution
-X1	X1	(kA - k4)*X1 - k2*X1*X2		normal
-X2	X2	-k3*X2 + k5*X3		normal
-X3	X3	k4*X1 - k5*X3		normal

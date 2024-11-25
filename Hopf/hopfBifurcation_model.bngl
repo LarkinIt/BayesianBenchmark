@@ -1,8 +1,8 @@
 begin model
 
 begin parameters
-
-    kA  3.8 # kA > k3+k4+k5
+    # kA > k3+k4+k5
+    kA  3.8 
     k2  1
     k3  1
     k4  1
