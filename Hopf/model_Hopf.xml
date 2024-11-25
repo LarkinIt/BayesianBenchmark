@@ -21,6 +21,7 @@
       <!-- Independent variables -->
       <parameter id="kA" value="3.8"/>
       <parameter id="k2" value="1"/>
+      <parameter id="dummy" value="1"/>
       <parameter id="k3" value="1"/>
       <parameter id="k4" value="1"/>
       <parameter id="k5" value="1"/>
