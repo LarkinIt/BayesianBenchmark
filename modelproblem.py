@@ -15,11 +15,12 @@ class ModelProblem():
 		problem = importer.create_problem()
 
 		# set tolerances for ode solver
-		if self.model_name == "Bachmann_MSB2011":
-			solver_options = pypesto_rr.SolverOptions(
-				integrator="rk45"
-				)
-			problem.objective._objectives[0].solver_options = solver_options
+		if self.model_name == "Hopf":
+			#solver_options = pypesto_rr.SolverOptions(
+			#	integrator="rk45"
+			#	)
+			#problem.objective.solver_options = solver_options
+			pass
 		else:
 			solver_options = pypesto_rr.SolverOptions(
 				relative_tolerance = 1e-16,

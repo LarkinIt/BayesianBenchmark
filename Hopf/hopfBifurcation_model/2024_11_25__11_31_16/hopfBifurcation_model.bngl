@@ -7,15 +7,20 @@ begin parameters
     k3  1
     k4  1
     k5  1
+
     # fit kA and k2
+  
 end parameters
 
 begin molecule types
+
     X1()
     X2()
     X3()
+
     # try fitting to all 3
     # 10 time points (at least one period): t=0-15 
+
 end molecule types
 
 begin species
@@ -35,11 +40,13 @@ begin observables
 end observables
 
 begin reaction rules
+
     X1 -> X1 + X1  kA
     X1 + X2 -> X2  k2
     X2 -> 0  k3
     X1 -> X3  k4
     X3 -> X2  k5
+
 end reaction rules
 
 end model
