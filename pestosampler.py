@@ -24,12 +24,43 @@ class pestoSampler(BayesianInference):
 	def initialize(self):
 		mod_prob = self.model_problem
 
-		lhs = qmc.LatinHypercube(d=mod_prob.n_dim, seed=self.seed)
-		scale_x0 = lhs.random(n=self.n_chains)
 		lbs = [x[0] for x in mod_prob.bounds]
 		ubs = [x[1] for x in mod_prob.bounds]
+		lhs = qmc.LatinHypercube(d=mod_prob.n_dim, seed=self.seed)
+		scale_x0 = lhs.random(n=self.n_chains)
 		x0 = qmc.scale(scale_x0, l_bounds=lbs, u_bounds=ubs)
+		#print(f"Original x0: {x0}")
 
+		x0_fail = False
+		# verify that x0 works
+		for x in x0:
+			fval = self.model_problem.log_likelihood_wrapper(x)
+			#print(fval)
+			if fval == 1e10:
+				x0_fail = True
+				break
+		
+		# re-sample if necessary
+		if x0_fail:
+			max_tries = int(1e4)
+			n_tries = 0
+			while (n_tries < max_tries) and x0_fail:
+				n_tries += 1
+				scale_x0 = lhs.random(n=self.n_chains)
+				x0 = qmc.scale(scale_x0, l_bounds=lbs, u_bounds=ubs)
+				#print(f"Try No.{n_tries}, New x0: {x0}")
+				new_fvals = np.array([self.model_problem.log_likelihood_wrapper(x) for x in x0])
+				#print(f"\t Fvals: {new_fvals}")
+				#print("check: ", new_fvals == 1e10)
+				if np.any(new_fvals == 1e10):
+					x0_fail = True
+				else:
+					x0_fail = False
+				#print(x0_fail)
+
+		#raise ValueError
+		# reset total n_fun_calls
+		mod_prob.n_fun_calls = 0
 		self.x0 = list(x0)
 		sampler = sample.AdaptiveParallelTemperingSampler(
 			internal_sampler=sample.AdaptiveMetropolisSampler(),
