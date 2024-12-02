@@ -1,6 +1,0 @@
-observableId	observableName	observableFormula	noiseFormula
-nsp_rlu	NonstructuralPolyprotein	scale_nsp*allNsp	1
-sp_rlu	StructuralPolyprotein	scale_sp*luciferase	1
-posRNA_obs	Genome	allPos	1
-sgRNA_obs	Subgenome	allSg	1
-PFU_obs	PlaqueFormingUnit	PFU	1
