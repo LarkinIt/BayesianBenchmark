@@ -9,7 +9,7 @@ from modelproblem import ModelProblem
 from result_classes import Result,MethodResults
 from tqdm import tqdm
 
-prob_name = "linear_mRNA_self_reg"
+prob_name = "Hopf"
 methods = ["smc", "pmc", "ptmcmc"]
 
 mod_prob = ModelProblem(prob_name)
