@@ -4,7 +4,7 @@ seeds=({0..99..1})
 declare -a probs=("Hopf")
 declare -a methods=("ptmcmc")
 n_ensemble=1000
-n_iter=127250
+n_iter=287000
 ##### Declare anything else needed to pass as an arg below
 
 for prob in "${probs[@]}"; do
