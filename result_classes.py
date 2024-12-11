@@ -8,6 +8,11 @@ class Result:
 			setattr(self, key, result_dict[key])
 		if self.method != "ptmcmc":
 			self.converged = True
+		
+		if self.method == "ptmcmc" and self.converged:
+			burn_in_idx = self.algo_specific_info["burn_in_idx"]
+			n_chains = self.n_chains
+			self.n_fun_calls = (burn_in_idx+1)*n_chains
 
 		if not("posterior_weights" in result_dict.keys()):
 			n = len(result_dict["posterior_llhs"])
