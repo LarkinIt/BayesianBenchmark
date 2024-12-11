@@ -1,13 +1,13 @@
-observableId	observableName	observableFormula
-TNF	TNF	TNF
-TNFRi	TNFR(st~i)	TNFR(st~i)
-TNFRa	TNFR(st~a)	TNFR(st~a)
-IKKi	IKK(s~I)	IKK(s~I)
-IKKa	IKK(s~A)	IKK(s~A)
-cNFkB	NFkB(IkB,loc~c)	NFkB(IkB,loc~c)
-nNFkB	NFkB(IkB,loc~n)	NFkB(IkB,loc~n)
-cIkB	IkB(NFkB,loc~c)	IkB(NFkB,loc~c)
-nIkB	IkB(NFkB,loc~n)	IkB(NFkB,loc~n)
-cNFkB_IkB	NFkB(IkB!0,loc~c).IkB(NFkB!0,loc~c)	NFkB(IkB!0,loc~c).IkB(NFkB!0,loc~c)
-nNFkB_IkB	NFkB(IkB!0,loc~n).IkB(NFkB!0,loc~n)	NFkB(IkB!0,loc~n).IkB(NFkB!0,loc~n)
-A20	A20	A20
+observableId	observableName	observableFormula	noiseFormula
+TNF_obs	TNF	TNF	0.01 * TNF
+TNFRi_obs	TNFR(st~i)	TNFR_st_i	0.01 * TNFR_st_i
+TNFRa_obs	TNFR(st~a)	TNFR_st_a	0.01 * TNFR_st_a
+IKKi_obs	IKK(s~I)	IKK_s_I	0.01 * IKK_s_I
+IKKa_obs	IKK(s~A)	IKK_s_A	0.01 * IKK_s_A
+cNFkB_obs	NFkB(IkB,loc~c)	NFkB_IkB_loc_c	0.01 * NFkB_IkB_loc_c
+nNFkB_obs	NFkB(IkB,loc~n)	NFkB_IkB_loc_n	0.01 * NFkB_IkB_loc_n
+cIkB_obs	IkB(NFkB,loc~c)	IkB_NFkB_loc_c	0.01 * IkB_NFkB_loc_c
+nIkB_obs	IkB(NFkB,loc~n)	IkB_NFkB_loc_n	0.01 * IkB_NFkB_loc_n
+cNFkB_IkB_obs	NFkB(IkB!0,loc~c).IkB(NFkB!0,loc~c)	NFkB_IkB_0_loc_c_IkB_NFkB_0_loc_c	0.01 * NFkB_IkB_0_loc_c_IkB_NFkB_0_loc_c
+nNFkB_IkB_obs	NFkB(IkB!0,loc~n).IkB(NFkB!0,loc~n)	NFkB_IkB_0_loc_n_IkB_NFkB_0_loc_n	0.01 * NFkB_IkB_0_loc_n_IkB_NFkB_0_loc_n
+A20_obs	A20	A20	0.01 * A20

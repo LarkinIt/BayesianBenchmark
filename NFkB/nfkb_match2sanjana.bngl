@@ -43,8 +43,9 @@ begin parameters
     boundc  6.5546      # total cytoplasmic NFkB-IkB protein concentration
     
 end parameters
-
-begin molecule types 
+ 
+# matchs sanjana 
+begin molecule types  
 
     ## activation module
     TNF() # TNF: tumor necrosis factor               

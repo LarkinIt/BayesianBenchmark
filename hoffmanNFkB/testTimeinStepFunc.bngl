@@ -1,0 +1,124 @@
+begin model
+
+begin parameters
+
+##### core module #####
+
+
+# 5
+LOG_mRNA_syn    5e-7    # basal IkBa mRNA synthesis 
+# 6
+LOG_IkBamRNA_syn    6e-5    # induced IkBa mRNA synthesis
+# 7
+LOG_mRNA_deg    0.301/12   # IkBa mRNA degradation (log(2)/12)
+
+
+# Hill coefficients
+hill29  2.938
+# hill3   3
+
+# # Km values
+# LOG_MyD88_Km    0.012448    # EC50 for MyD88 activation
+LOG_IkBAmRNA_Km 0.1775  # EC50 for mRNA synthesis 
+
+# ## scaling factor
+# scale   0.001
+# scale_cyt_nuc   3.5
+# scale_NFkB  (1 / scale_cyt_nuc)
+
+end parameters
+
+begin molecule types
+
+# ##### core #####
+
+t()
+x_correct()
+x_builtin()
+
+mRNA()  # mRNA or IkBat
+
+NFkB(IkBa,IKK,loc~n~c)   # NFkB can bind to IKK and IkBa
+                         # location: n: nuclear, c: cytoplasmic
+
+
+end molecule types
+
+begin species
+end species
+
+begin observables
+
+
+## 6: translated IkBa or in the image, mRNA
+Molecules mRNA mRNA()
+
+## 10: nuclear NFkB 
+Molecules NFkBn NFkB(IkBa,IKK,loc~n)
+
+
+## testing time
+Molecules t t()
+Molecules x_exact x_correct()
+Molecules x_builtin x_builtin()
+
+end observables
+
+begin functions
+
+# 5
+mRNA_syn    10^LOG_mRNA_syn
+# 6
+IkBamRNA_syn    10^LOG_IkBamRNA_syn
+# 7
+mRNA_deg    10^LOG_mRNA_deg
+
+
+# ####
+# MyD88_Km    10^LOG_MyD88_Km
+IkBAmRNA_Km 10^LOG_IkBAmRNA_Km
+
+### DELAYS ###
+
+
+# delay14() IkBamRNA_syn if t < 14 IkBamRNA_syn == 0, else: IkBamRNA_syn == IkBamRNA_syn
+
+
+
+
+####
+
+f_correct() t()
+f_builtin() t()-time()
+
+delay14 if(t<14,0,IkBamRNA_syn)
+
+
+end functions
+
+begin reaction rules
+
+0 -> t() 1
+0 -> x_correct() f_correct()
+0 -> x_builtin() f_builtin()
+
+
+# ##### core #####
+
+# basal IkBa mRNA synthesis
+R5: 0 -> mRNA()    mRNA_syn
+# induced IkBa mRNA synthesis --- DELAY
+# R6: NFkB(IkBa,IKK,loc~n) -> mRNA() + NFkB(IkBa,IKK,loc~n)   Hill(IkBamRNA_syn,IkBAmRNA_Km,hill29)
+R6: NFkB(IkBa,IKK,loc~n) -> mRNA() + NFkB(IkBa,IKK,loc~n)   delay14()
+# IkBa mRNA degradation 
+R7: mRNA() -> 0 mRNA_deg
+
+
+end reaction rules
+
+end model
+
+# generate_network({overwrite=>1})
+# writeSBML()
+
+simulate_ode({t_start=>0,t_end=>20,n_steps=>10});

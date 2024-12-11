@@ -1,0 +1,22 @@
+begin observables
+  Molecules t t()
+  Molecules x_exact x_correct()
+  Molecules x_builtin x_builtin()
+end observables
+begin functions
+  # Uses time obtained through integration - this is a fine workaround
+  # for ODE models but is suboptimal for SSA, because in order to reduce the 
+  # noise the reaction rate must be set to be much higher than the desired 
+  # time resolution.
+  f_correct() t()
+  # Uses time obtained from builtin call
+  f_builtin() t()-time()
+end functions
+
+begin reaction rules
+  0 -> t() 1
+  0 -> x_correct() f_correct()
+  0 -> x_builtin() f_builtin()
+end reaction rules
+
+simulate({method=>"ode",t_end=>10,n_steps=>100,print_functions=>1,rtol=>1e-12,atol=>1e-12})

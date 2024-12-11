@@ -1,0 +1,79 @@
+# mRNA self-regulation model from Liepe et al 2014
+
+begin model
+
+begin parameters
+
+    # all parameters are in log
+    log_param0 1 # rate mRNA is translated into protein 1
+    log_param1 -0.301 # rate of post-translational modification from protein 1 to protein 2
+    log_param2 1 # regulates production of mRNA 
+    log_param3 0.3031 # degradation of mRNA 
+    log_param4 0 # degrdation of all species 
+
+    # initial conditions
+    mRNA0      10
+    p10        5      
+  
+end parameters
+
+begin molecule types
+
+    mRNA()
+    p1()
+    p2()
+
+end molecule types
+
+begin species
+
+    mRNA()  mRNA0
+    p1()    p10
+
+end species
+
+begin observables
+
+    Molecules mRNA mRNA()
+    Molecules p1 p1()
+    Molecules p2 p2()
+
+end observables
+
+begin functions
+
+    # unlog parameters 
+    param0 10^log_param0
+    param1 10^log_param1
+    param2 10^log_param2
+    param3 10^log_param3
+    param4 10^log_param4
+    # functions 
+    tomRNA()     p1 * param2
+    frommRNA()   p2 * param3
+
+end functions
+
+begin reaction rules
+
+    R1: 0 -> mRNA   tomRNA()
+    R2: mRNA -> 0   frommRNA()
+    R3: mRNA -> 0   param4
+    R4: mRNA -> p1  param0
+    R5: p1 -> p2    param1
+    R6: p1 -> 0     param4
+    R7: p2 -> 0     param4 
+
+end reaction rules
+
+end model
+
+# generate reaction network
+generate_network({overwrite=>1})
+writeSBML()
+
+simulate({method=>"ode",suffix=>"ode",t_end=>16, n_steps=>1000})
+
+
+
+
