@@ -47,6 +47,15 @@ class Result:
 				conv_calls = self.algo_specific_info["calls_by_iter"][first_iter]
 		return conv_calls
 
+	def get_init_best_llh(self):
+		all_llhs = self.all_llhs
+		if self.method != "ptmcmc":
+			iter0 = all_llhs[0,:]
+		else:
+			# this assumes 4 chains
+			iter0 = all_llhs[:250,:]
+		return np.amax(iter0)
+
 
 class MethodResults:
 	def __init__(self, method) -> None:
@@ -85,7 +94,11 @@ class MethodResults:
 		all_convs = [x.get_convergence(llh_threshold) for x in self.all_runs]
 		return np.array(all_convs)
 
-	
+	def get_best_inits(self):
+		init_llhs = [x.get_init_best_llh() for x in self.all_runs]
+		return np.array(init_llhs)
+
+
 	# Source: https://stackoverflow.com/questions/40044375/how-to-calculate-the-kolmogorov-smirnov-statistic-between-two-weighted-samples
 	def ks_weighted(self, data1, data2, wei1, wei2, alternative='two-sided'):
 		ix1 = np.argsort(data1)
