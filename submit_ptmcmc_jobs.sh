@@ -1,10 +1,10 @@
 #!/bin/bash
 
 seeds=({0..99..1})
-declare -a probs=("Hopf")
+declare -a probs=("long_Calcium_Oscillate")
 declare -a methods=("ptmcmc")
 n_ensemble=1000
-n_iter=287000
+n_iter=3677500
 ##### Declare anything else needed to pass as an arg below
 
 for prob in "${probs[@]}"; do
