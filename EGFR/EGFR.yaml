@@ -1,5 +1,5 @@
 format_version: 1
-parameter_file: parameters_EGFR.tsv
+parameter_file: parameters_EGFR_DetailedBalance.tsv
 problems:
 - condition_files:
   - experimentalCondition_EGFR.tsv
@@ -8,6 +8,7 @@ problems:
   observable_files:
   - observables_EGFR.tsv
   sbml_files:
-  - model_EGFR.xml
+  - EGFR_Kholodenko_Step4_DetailedBalance_sbml.xml
   visualization_files:
   - visualizationSpecification_EGFR.tsv
+
