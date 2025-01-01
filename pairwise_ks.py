@@ -10,7 +10,7 @@ from result_classes import Result,MethodResults
 from tqdm import tqdm
 
 prob_name = "Hopf"
-methods = ["smc", "pmc", "ptmcmc"]
+methods = [ "ptmcmc", "smc", "pmc"]
 
 mod_prob = ModelProblem(prob_name)
 mod_prob.initialize()

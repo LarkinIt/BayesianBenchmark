@@ -33,6 +33,10 @@ class pocoSampler(BayesianInference):
 		n_steps = None
 		if mod_prob.n_dim < 10:
 			n_steps = 10
+
+		if mod_prob.model_name == "Neg_Feed_Oscillate":
+			n_steps = 10 * mod_prob.n_dim
+			print(f"NFO N_STEPS = {n_steps}")
 		sampler = pc.Sampler(
 			prior=prior,
 			likelihood=llh,
