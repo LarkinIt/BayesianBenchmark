@@ -56,6 +56,12 @@ class Result:
 			iter0 = all_llhs[:250,:]
 		return np.amax(iter0)
 
+	def get_max_llh(self):
+		if self.converged:
+			return max(self.posterior_llhs)
+		else:
+			return np.amax(self.all_llhs)
+
 
 class MethodResults:
 	def __init__(self, method) -> None:
@@ -97,6 +103,10 @@ class MethodResults:
 	def get_best_inits(self):
 		init_llhs = [x.get_init_best_llh() for x in self.all_runs]
 		return np.array(init_llhs)
+
+	def get_max_llhs(self):
+		max_llhs = [x.get_max_llh() for x in self.all_runs]
+		return np.array(max_llhs)
 
 
 	# Source: https://stackoverflow.com/questions/40044375/how-to-calculate-the-kolmogorov-smirnov-statistic-between-two-weighted-samples
